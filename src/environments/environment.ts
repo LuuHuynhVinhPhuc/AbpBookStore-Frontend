@@ -6,21 +6,21 @@ export const environment = {
   production: false,
   application: {
     baseUrl,
-    name: 'Default_Template',
+    name: 'BookStore',
     logoUrl: '',
   },
   oAuthConfig: {
-    issuer: 'https://localhost:44332/',
+    issuer: 'https://localhost:44332',
     redirectUri: baseUrl,
-    clientId: 'Default_Template_App',
+    clientId: 'BookStore_App',
     responseType: 'code',
-    scope: 'offline_access Default_Template',
-    requireHttps: true,
+    scope: 'offline_access BookStore',
+    requireHttps: false,
   },
   apis: {
     default: {
       url: 'https://localhost:44332',
-      rootNamespace: 'Default_Template',
+      rootNamespace: 'BookStore',
     },
   },
 } as Environment;
