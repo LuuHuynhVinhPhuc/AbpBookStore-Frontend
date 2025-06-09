@@ -1,1 +1,117 @@
-<p>checkout works!</p>
+<div class="container py-4">
+  <div class="row justify-content-center">
+    <div class="col-lg-7">
+      <h4 class="fw-bold mb-3">Checkout</h4>
+      <form *ngIf="!orderConfirmed" (ngSubmit)="confirmOrder()" autocomplete="off">
+        <!-- Thông tin giao hàng -->
+        <div class="card mb-3 border-0 shadow-sm rounded-4">
+          <div class="card-body">
+            <h6 class="fw-semibold mb-3">Shipping Information</h6>
+            <div class="mb-2">
+              <label class="form-label">Full Name</label>
+              <input class="form-control" [(ngModel)]="shippingInfo.name" name="name" required />
+            </div>
+            <div class="mb-2">
+              <label class="form-label">Address</label>
+              <input
+                class="form-control"
+                [(ngModel)]="shippingInfo.address"
+                name="address"
+                required
+              />
+            </div>
+            <div class="mb-2">
+              <label class="form-label">Phone</label>
+              <input class="form-control" [(ngModel)]="shippingInfo.phone" name="phone" required />
+            </div>
+            <div class="mb-2">
+              <label class="form-label">Email</label>
+              <input
+                class="form-control"
+                [(ngModel)]="shippingInfo.email"
+                name="email"
+                type="email"
+                required
+              />
+            </div>
+          </div>
+        </div>
+        <!-- Phương thức thanh toán -->
+        <div class="card mb-3 border-0 shadow-sm rounded-4">
+          <div class="card-body">
+            <h6 class="fw-semibold mb-3">Payment Method</h6>
+            <div class="form-check mb-2">
+              <input
+                class="form-check-input"
+                type="radio"
+                name="payment"
+                id="cod"
+                value="cod"
+                [(ngModel)]="paymentMethod"
+                checked
+              />
+              <label class="form-check-label" for="cod">Cash on Delivery</label>
+            </div>
+            <div class="form-check">
+              <input
+                class="form-check-input"
+                type="radio"
+                name="payment"
+                id="card"
+                value="card"
+                [(ngModel)]="paymentMethod"
+              />
+              <label class="form-check-label" for="card">Credit/Debit Card</label>
+            </div>
+          </div>
+        </div>
+        <!-- Thông tin đơn hàng -->
+        <div class="card mb-3 border-0 shadow-sm rounded-4">
+          <div class="card-body">
+            <h6 class="fw-semibold mb-3">Order Summary</h6>
+            <div *ngFor="let item of cartItems" class="d-flex align-items-center mb-2">
+              <img
+                [src]="item.image"
+                [alt]="item.title"
+                class="rounded me-2"
+                style="width: 40px; height: 40px; object-fit: cover"
+              />
+              <div class="flex-grow-1">
+                <div class="small fw-semibold">{{ item.title }}</div>
+                <div class="text-muted small">x{{ item.quantity }}</div>
+              </div>
+              <div class="fw-bold text-primary">${{ (item.price * item.quantity).toFixed(2) }}</div>
+            </div>
+            <hr />
+            <div class="d-flex justify-content-between mb-1 small">
+              <span>Subtotal</span>
+              <span>${{ subtotal.toFixed(2) }}</span>
+            </div>
+            <div class="d-flex justify-content-between mb-1 small">
+              <span>Shipping</span>
+              <span>{{ shipping === 0 ? 'Free' : '$' + shipping.toFixed(2) }}</span>
+            </div>
+            <div class="d-flex justify-content-between mt-2">
+              <strong>Total</strong>
+              <strong>${{ total.toFixed(2) }}</strong>
+            </div>
+          </div>
+        </div>
+        <div class="d-grid">
+          <button class="btn btn-primary btn-lg rounded-pill" type="submit">
+            <i class="fas fa-check-circle me-1"></i> Confirm Order
+          </button>
+        </div>
+      </form>
+      <!-- Thông báo xác nhận -->
+      <div *ngIf="orderConfirmed" class="text-center py-5">
+        <i class="fas fa-check-circle fa-3x text-success mb-3"> </i>
+        <h4 class="mb-3">Thank you for your order!</h4>
+        <p class="text-muted">Your order has been placed successfully. We will contact you soon.</p>
+        <button routerLink="/dashboard" class="btn btn-outline-primary mt-3" title="Back to Home">
+          <i class="fas fa-arrow-left me-1" aria-hidden="true"></i> Back to Home
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

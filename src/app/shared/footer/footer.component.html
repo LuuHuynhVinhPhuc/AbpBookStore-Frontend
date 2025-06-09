@@ -1,1 +1,86 @@
-<p>footer works!</p>
+<footer class="bg-light text-light py-5 mt-5">
+  <div class="container">
+    <div class="row">
+      <!-- About Section -->
+      <div class="col-md-4 mb-4">
+        <h5 class="mb-3">
+          <i class="fas fa-book-open me-2"></i>
+          BookStore
+        </h5>
+        <p class="text-muted">
+          Your one-stop destination for all your reading needs. Discover thousands of books across
+          various genres.
+        </p>
+        <div class="social-links">
+          <a href="#" class="text-light me-3"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" class="text-light me-3"><i class="fab fa-twitter"></i></a>
+          <a href="#" class="text-light me-3"><i class="fab fa-instagram"></i></a>
+          <a href="#" class="text-light"><i class="fab fa-linkedin-in"></i></a>
+        </div>
+      </div>
+
+      <!-- Quick Links -->
+      <div class="col-md-4 mb-4">
+        <h5 class="mb-3">Quick Links</h5>
+        <ul class="list-unstyled">
+          <li class="mb-2">
+            <a routerLink="/dashboard" class="text-muted text-decoration-none">
+              <i class="fas fa-chevron-right me-2"></i>Home
+            </a>
+          </li>
+          <li class="mb-2">
+            <a routerLink="/card" class="text-muted text-decoration-none">
+              <i class="fas fa-chevron-right me-2"></i>Shopping Cart
+            </a>
+          </li>
+          <li class="mb-2">
+            <a routerLink="/checkout" class="text-muted text-decoration-none">
+              <i class="fas fa-chevron-right me-2"></i>Checkout
+            </a>
+          </li>
+          <li class="mb-2">
+            <a href="#" class="text-muted text-decoration-none">
+              <i class="fas fa-chevron-right me-2"></i>About Us
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Contact Info -->
+      <div class="col-md-4 mb-4">
+        <h5 class="mb-3">Contact Us</h5>
+        <ul class="list-unstyled text-muted">
+          <li class="mb-2">
+            <i class="fas fa-map-marker-alt me-2"></i>
+            123 Book Street, Reading City
+          </li>
+          <li class="mb-2">
+            <i class="fas fa-phone me-2"></i>
+            +1 234 567 890
+          </li>
+          <li class="mb-2">
+            <i class="fas fa-envelope me-2"></i>
+            contact&#64;bookstore.com
+          </li>
+          <li class="mb-2">
+            <i class="fas fa-clock me-2"></i>
+            Mon - Fri: 9:00 AM - 6:00 PM
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Copyright -->
+    <hr class="my-4 bg-secondary" />
+    <div class="row">
+      <div class="col-md-6 text-center text-md-start">
+        <p class="mb-0 text-muted">&copy; {{ currentYear }} BookStore. All rights reserved.</p>
+      </div>
+      <div class="col-md-6 text-center text-md-end">
+        <a href="#" class="text-muted text-decoration-none me-3">Privacy Policy</a>
+        <a href="#" class="text-muted text-decoration-none me-3">Terms of Service</a>
+        <a href="#" class="text-muted text-decoration-none">FAQ</a>
+      </div>
+    </div>
+  </div>
+</footer>

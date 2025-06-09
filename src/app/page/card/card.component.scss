@@ -1,0 +1,66 @@
+// Nền nhẹ cho cart page
+.cart-bg {
+  background: #f7f7fa;
+  min-height: 100vh;
+}
+
+.card {
+  border-radius: 14px;
+}
+
+.cart-thumb {
+  box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+  border-radius: 8px;
+}
+
+.table {
+  --bs-table-bg: transparent;
+}
+
+.table th, .table td {
+  vertical-align: middle;
+  padding-top: 0.6rem;
+  padding-bottom: 0.6rem;
+}
+
+.btn-sm, .form-control-sm {
+  font-size: 0.95rem;
+  padding: 0.25rem 0.5rem;
+}
+
+input[readonly] {
+  background: #f3f3f3;
+  border: none;
+}
+
+.btn-outline-secondary {
+  border-color: #a3a3c2;
+}
+
+.btn-primary {
+  background: #3d5afe;
+  border-color: #3d5afe;
+}
+
+.btn-primary:active, .btn-primary:focus {
+  background: #304ffe;
+  border-color: #304ffe;
+}
+
+.btn-outline-secondary:active, .btn-outline-secondary:focus {
+  border-color: #3d5afe;
+}
+
+.btn-link.text-danger {
+  font-size: 1.1rem;
+}
+
+@media (max-width: 991px) {
+  .card-body {
+    padding: 1.2rem !important;
+  }
+  .cart-thumb {
+    width: 40px !important;
+    height: 40px !important;
+  }
+}
