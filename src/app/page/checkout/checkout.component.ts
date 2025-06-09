@@ -1,39 +1,28 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
 
 interface CartItem {
-  id: number;
-  title: string;
-  price: number;
+  book: {
+    id: string;
+    name: string;
+    price: number;
+    image: string;
+    authors: { name: string }[];
+  };
   quantity: number;
-  image: string;
 }
 
 @Component({
   selector: 'app-checkout',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, RouterModule],
   templateUrl: './checkout.component.html',
   styleUrl: './checkout.component.scss',
 })
-export class CheckoutComponent {
-  cartItems: CartItem[] = [
-    {
-      id: 1,
-      title: 'The Great Gatsby',
-      price: 15.99,
-      quantity: 1,
-      image: 'assets/images/book1.jpg',
-    },
-    {
-      id: 2,
-      title: 'To Kill a Mockingbird',
-      price: 12.99,
-      quantity: 2,
-      image: 'assets/images/book2.jpg',
-    },
-  ];
+export class CheckoutComponent implements OnInit {
+  cartItems: CartItem[] = [];
 
   shippingInfo = {
     name: '',
@@ -45,8 +34,15 @@ export class CheckoutComponent {
   paymentMethod = 'cod';
   orderConfirmed = false;
 
+  ngOnInit() {
+    const cart = localStorage.getItem('cart');
+    if (cart) {
+      this.cartItems = JSON.parse(cart);
+    }
+  }
+
   get subtotal(): number {
-    return this.cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
+    return this.cartItems.reduce((total, item) => total + item.book.price * item.quantity, 0);
   }
   get shipping(): number {
     return this.subtotal > 50 ? 0 : 5.99;

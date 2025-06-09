@@ -8,109 +8,98 @@
     </div>
 
     <!-- Login Form -->
-    <form *ngIf="mode === 'login'">
+    <form *ngIf="mode === 'login'" [formGroup]="loginForm" (ngSubmit)="onLogin()">
       <div class="mb-3">
-        <label for="email" class="form-label">Email address</label>
+        <label for="userName" class="form-label">Username</label>
         <input
-          id="email"
+          id="userName"
           class="form-control"
-          type="email"
-          placeholder="Enter your email"
-          title="Email"
-          required
+          formControlName="userName"
+          type="text"
+          placeholder="Enter your username"
         />
       </div>
+
       <div class="mb-3 position-relative">
         <label for="password" class="form-label">Password</label>
         <div class="input-group">
           <input
             id="password"
             class="form-control"
-            type="{{ showPassword ? 'text' : 'password' }}"
+            [type]="showPassword ? 'text' : 'password'"
             placeholder="Enter your password"
-            title="Password"
-            required
+            formControlName="password"
           />
           <button
             type="button"
             class="btn btn-outline-secondary"
             (click)="showPassword = !showPassword"
-            title="Show/Hide password"
           >
             <i class="fas" [ngClass]="showPassword ? 'fa-eye-slash' : 'fa-eye'"></i>
           </button>
         </div>
       </div>
-      <button type="submit" class="btn btn-primary w-100">
-        <i class="fas fa-sign-in-alt me-2"></i> Sign In
-      </button>
-      <div class="text-center mt-3">
-        <span>Don't have an account?</span>
-        <a
-          routerLink="/auth"
-          [queryParams]="{ mode: 'register' }"
-          class="text-decoration-none ms-1"
-        >
-          Sign Up
-        </a>
+
+      <div class="mb-3 form-check">
+        <input
+          type="checkbox"
+          id="rememberMe"
+          class="form-check-input"
+          formControlName="rememberMe"
+        />
+        <label for="rememberMe" class="form-check-label">Remember me</label>
       </div>
+
+      <button type="submit" class="btn btn-primary w-100">Sign In</button>
     </form>
 
     <!-- Register Form -->
-    <form *ngIf="mode === 'register'">
+    <form *ngIf="mode === 'register'" [formGroup]="registerForm" (ngSubmit)="onRegister()">
       <div class="mb-3">
-        <label for="fullName" class="form-label">Full Name</label>
+        <label for="userName" class="form-label">Username</label>
         <input
-          id="fullName"
+          id="userName"
           class="form-control"
           type="text"
-          placeholder="Enter your full name"
-          title="Full Name"
-          required
+          formControlName="userName"
+          placeholder="Enter your username"
         />
       </div>
+
       <div class="mb-3">
-        <label for="emailReg" class="form-label">Email address</label>
+        <label for="emailAddress" class="form-label">Email address</label>
         <input
-          id="emailReg"
+          id="emailAddress"
           class="form-control"
           type="email"
+          formControlName="emailAddress"
           placeholder="Enter your email"
-          title="Email"
-          required
         />
       </div>
-      <!-- Register Password -->
-      <div class="mb-3 position-relative">
-        <label for="passwordReg" class="form-label">Password</label>
-        <div class="input-group">
-          <input
-            id="passwordReg"
-            class="form-control"
-            type="{{ showPassword ? 'text' : 'password' }}"
-            placeholder="Create a password"
-            title="Password"
-            required
-          />
-          <button
-            type="button"
-            class="btn btn-outline-secondary"
-            (click)="showPassword = !showPassword"
-            title="Show/Hide password"
-          >
-            <i class="fas" [ngClass]="showPassword ? 'fa-eye-slash' : 'fa-eye'"></i>
-          </button>
-        </div>
+
+      <div class="mb-3">
+        <label for="password" class="form-label">Password</label>
+        <input
+          id="password"
+          class="form-control"
+          [type]="showPassword ? 'text' : 'password'"
+          formControlName="password"
+          placeholder="Create a password"
+        />
       </div>
-      <button type="submit" class="btn btn-success w-100">
-        <i class="fas fa-user-plus me-2"></i> Sign Up
-      </button>
-      <div class="text-center mt-3">
-        <span>Already have an account?</span>
-        <a routerLink="/auth" [queryParams]="{ mode: 'login' }" class="text-decoration-none ms-1">
-          Sign In
-        </a>
+
+      <div class="mb-3">
+        <label for="appName" class="form-label">App Name</label>
+        <input
+          id="appName"
+          class="form-control"
+          type="text"
+          formControlName="appName"
+          placeholder="App name"
+        />
       </div>
+
+      <button type="submit" class="btn btn-success w-100">Sign Up</button>
     </form>
   </div>
 </div>

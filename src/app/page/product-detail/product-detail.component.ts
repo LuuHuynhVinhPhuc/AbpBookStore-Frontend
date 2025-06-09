@@ -1,7 +1,11 @@
+import { ToasterService } from '@abp/ng.theme.shared';
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
+import { BookService } from '@proxy/marcus/book-store/books';
+import { BookDTO } from '@proxy/marcus/book-store/books/dtos';
+import { CartService } from '../card/services/cart.service';
 
 interface Book {
   id: number;
@@ -15,64 +19,45 @@ interface Book {
 @Component({
   selector: 'app-product-detail',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, RouterModule],
   templateUrl: './product-detail.component.html',
   styleUrl: './product-detail.component.scss',
 })
-export class ProductDetailComponent {
+export class ProductDetailComponent implements OnInit {
   product: Book | undefined;
 
-  constructor(private route: ActivatedRoute, private router: Router) {
-    // Lấy id từ route và giả lập dữ liệu
-    const id = Number(this.route.snapshot.paramMap.get('id'));
-    // Dữ liệu mẫu, sau này thay bằng API
-    const books: Book[] = [
-      {
-        id: 1,
-        title: 'The Great Gatsby',
-        author: 'F. Scott Fitzgerald',
-        price: 15.99,
-        image: 'assets/images/book1.jpg',
-        description:
-          'A classic novel set in the Roaring Twenties, exploring themes of wealth, love, and the American Dream.',
-      },
-      {
-        id: 2,
-        title: 'To Kill a Mockingbird',
-        author: 'Harper Lee',
-        price: 12.99,
-        image: 'assets/images/book2.jpg',
-        description:
-          'A powerful story about racial injustice and childhood innocence in the Deep South.',
-      },
-      {
-        id: 3,
-        title: '1984',
-        author: 'George Orwell',
-        price: 14.99,
-        image: 'assets/images/book3.jpg',
-        description: 'A dystopian novel about totalitarianism, surveillance, and freedom.',
-      },
-      {
-        id: 4,
-        title: 'Pride and Prejudice',
-        author: 'Jane Austen',
-        price: 11.99,
-        image: 'assets/images/book4.jpg',
-        description:
-          'A romantic novel that also critiques the British landed gentry at the end of the 18th century.',
-      },
-    ];
-    this.product = books.find(b => b.id === id);
+  private readonly router = inject(Router);
+  private readonly activeRouter = inject(ActivatedRoute);
+  private productService = inject(BookService);
+  private cartService = inject(CartService);
+  private toaster = inject(ToasterService);
+
+  public data: BookDTO;
+  public bookID: string;
+
+  ngOnInit(): void {
+    this.bookID = this.activeRouter.snapshot.paramMap.get('id');
+    this.getBook();
+  }
+
+  // get book by id
+  getBook() {
+    this.productService.get(this.bookID).subscribe(res => {
+      this.data = res;
+    });
   }
 
   addToCart() {
-    // TODO: Thêm vào giỏ hàng (tùy ý)
-    alert('Đã thêm vào giỏ hàng!');
+    if (this.data) {
+      this.cartService.addToCart(this.data);
+      this.toaster.success('Product is added successfully!', 'Congras');
+    }
   }
 
   buyNow() {
-    // TODO: Thêm vào giỏ hàng (tùy ý)
-    this.router.navigate(['/card']);
+    if (this.data) {
+      this.cartService.addToCart(this.data);
+      this.router.navigate(['/checkout']);
+    }
   }
 }
