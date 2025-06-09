@@ -1,11 +1,31 @@
+import { LoginComponent, RegisterComponent } from '@abp/ng.account';
+import { CardComponent } from '@abp/ng.theme.shared';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AdminComponent } from './page/admin/admin.component';
+import { CheckoutComponent } from './page/checkout/checkout.component';
+import { ProductDetailComponent } from './page/product-detail/product-detail.component';
 
 const routes: Routes = [
   {
     path: '',
     pathMatch: 'full',
-    loadChildren: () => import('./home/home.module').then(m => m.HomeModule),
+    loadChildren: () => import('./page/home/home.module').then(m => m.HomeModule),
+  },
+
+  { path: 'product/:id', component: ProductDetailComponent },
+  { path: 'cart', component: CardComponent },
+  { path: 'checkout', component: CheckoutComponent },
+  { path: 'login', component: LoginComponent },
+  { path: 'register', component: RegisterComponent },
+  {
+    path: 'admin',
+    component: AdminComponent,
+    // canActivate: [AdminGuard],
+    // children: [
+    //   { path: 'books', component: AdminBooksComponent },
+    //   { path: 'orders', component: AdminOrdersComponent }
+    // ]
   },
   {
     path: 'account',
