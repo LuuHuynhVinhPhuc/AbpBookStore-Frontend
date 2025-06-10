@@ -10,7 +10,7 @@ export const environment = {
     logoUrl: '',
   },
   oAuthConfig: {
-    issuer: 'https://localhost:44332',
+    issuer: 'https://localhost:44332/',
     redirectUri: baseUrl,
     clientId: 'BookStore_App',
     responseType: 'code',

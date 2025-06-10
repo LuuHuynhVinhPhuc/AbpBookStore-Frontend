@@ -3,9 +3,6 @@ import { Component } from '@angular/core';
 @Component({
   standalone: false,
   selector: 'app-root',
-  template: `
-    <abp-loader-bar />
-    <abp-dynamic-layout />
-  `,
+  templateUrl: './app.component.html',
 })
 export class AppComponent {}

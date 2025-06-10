@@ -1,11 +1,43 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { HomeComponent } from './page/home/home.component';
 
 const routes: Routes = [
   {
     path: '',
-    pathMatch: 'full',
-    loadChildren: () => import('./home/home.module').then(m => m.HomeModule),
+    component: HomeComponent,
+    children: [
+      {
+        path: '',
+        redirectTo: 'dashboard',
+        pathMatch: 'full',
+      },
+      {
+        path: 'dashboard',
+        loadComponent: () =>
+          import('./page/dashboard/dashboard.component').then(m => m.DashboardComponent),
+      },
+      {
+        path: 'product/:id',
+        loadComponent: () =>
+          import('./page/product-detail/product-detail.component').then(
+            m => m.ProductDetailComponent
+          ),
+      },
+      {
+        path: 'card',
+        loadComponent: () => import('./page/card/card.component').then(m => m.CardComponent),
+      },
+      {
+        path: 'checkout',
+        loadComponent: () =>
+          import('./page/checkout/checkout.component').then(m => m.CheckoutComponent),
+      },
+      {
+        path: 'auth',
+        loadComponent: () => import('./page/auth/auth.component').then(m => m.AuthComponent),
+      },
+    ],
   },
   {
     path: 'account',

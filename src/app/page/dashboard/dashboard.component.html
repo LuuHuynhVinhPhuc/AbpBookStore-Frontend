@@ -1,0 +1,78 @@
+<div class="dashboard-bg py-4">
+  <!-- Banner/Hero -->
+  <div class="container mb-4">
+    <div class="row align-items-center g-3">
+      <div class="col-md-7">
+        <h2 class="fw-bold mb-2">Welcome to BookStore!</h2>
+        <p class="text-muted mb-3">
+          Discover thousands of books, bestsellers, and exclusive deals. Enjoy your reading journey
+          with us!
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Quick Stats -->
+  <div class="container mb-4">
+    <div class="row text-center g-3">
+      <div class="col-4">
+        <div class="card border-0 shadow-sm py-3">
+          <div class="fs-3 fw-bold text-primary">{{ stats.books }}</div>
+          <div class="text-muted small">Books</div>
+        </div>
+      </div>
+      <div class="col-4">
+        <div class="card border-0 shadow-sm py-3">
+          <div class="fs-3 fw-bold text-success">{{ stats.customers }}</div>
+          <div class="text-muted small">Customers</div>
+        </div>
+      </div>
+      <div class="col-4">
+        <div class="card border-0 shadow-sm py-3">
+          <div class="fs-3 fw-bold text-warning">{{ stats.orders }}</div>
+          <div class="text-muted small">Orders</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Featured Books -->
+  <div class="container mb-4">
+    <div class="d-flex justify-content-between align-items-center mb-2">
+      <h5 class="fw-semibold mb-0">Featured Books</h5>
+      <a routerLink="/dashboard" class="btn btn-link btn-sm">See all</a>
+    </div>
+    <div class="row g-3">
+      <div class="col-6 col-md-3" *ngFor="let book of data.items">
+        <div class="card h-100 border-0 shadow-sm book-card">
+          <img
+            src="assets/images/default-book.jpg"
+            alt="{{ book.name }}"
+            class="card-img-top book-thumb"
+          />
+          <div class="card-body p-2">
+            <div class="fw-semibold small mb-1">{{ book.name }}</div>
+            <div class="text-muted small mb-2">
+              by
+              <ng-container *ngIf="book.authors?.length > 0; else noAuthor">
+                <span *ngFor="let author of book.authors; let isLast = last">
+                  {{ author.name }}<span *ngIf="!isLast">, </span>
+                </span>
+              </ng-container>
+              <ng-template #noAuthor>Unknown</ng-template>
+            </div>
+            <div class="d-flex justify-content-between align-items-center">
+              <span class="fw-bold text-primary">${{ book.price }}</span>
+              <a
+                [routerLink]="['/product', book.id]"
+                class="btn btn-outline-primary btn-sm rounded-pill"
+              >
+                <i class="fas fa-eye"></i> View
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

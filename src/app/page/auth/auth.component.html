@@ -1,0 +1,105 @@
+<div class="d-flex justify-content-center align-items-center min-vh-100 bg-light">
+  <div class="card shadow-lg border-0 rounded-4 p-4" style="width: 100%; max-width: 420px">
+    <div class="text-center mb-4">
+      <i class="fas fa-user-circle fa-3x text-primary"></i>
+      <h4 class="fw-bold mt-2">
+        {{ mode === 'login' ? 'Sign In to Your Account' : 'Create an Account' }}
+      </h4>
+    </div>
+
+    <!-- Login Form -->
+    <form *ngIf="mode === 'login'" [formGroup]="loginForm" (ngSubmit)="onLogin()">
+      <div class="mb-3">
+        <label for="userName" class="form-label">Username</label>
+        <input
+          id="userName"
+          class="form-control"
+          formControlName="userName"
+          type="text"
+          placeholder="Enter your username"
+        />
+      </div>
+
+      <div class="mb-3 position-relative">
+        <label for="password" class="form-label">Password</label>
+        <div class="input-group">
+          <input
+            id="password"
+            class="form-control"
+            [type]="showPassword ? 'text' : 'password'"
+            placeholder="Enter your password"
+            formControlName="password"
+          />
+          <button
+            type="button"
+            class="btn btn-outline-secondary"
+            (click)="showPassword = !showPassword"
+          >
+            <i class="fas" [ngClass]="showPassword ? 'fa-eye-slash' : 'fa-eye'"></i>
+          </button>
+        </div>
+      </div>
+
+      <div class="mb-3 form-check">
+        <input
+          type="checkbox"
+          id="rememberMe"
+          class="form-check-input"
+          formControlName="rememberMe"
+        />
+        <label for="rememberMe" class="form-check-label">Remember me</label>
+      </div>
+
+      <button type="submit" class="btn btn-primary w-100">Sign In</button>
+    </form>
+
+    <!-- Register Form -->
+    <form *ngIf="mode === 'register'" [formGroup]="registerForm" (ngSubmit)="onRegister()">
+      <div class="mb-3">
+        <label for="userName" class="form-label">Username</label>
+        <input
+          id="userName"
+          class="form-control"
+          type="text"
+          formControlName="userName"
+          placeholder="Enter your username"
+        />
+      </div>
+
+      <div class="mb-3">
+        <label for="emailAddress" class="form-label">Email address</label>
+        <input
+          id="emailAddress"
+          class="form-control"
+          type="email"
+          formControlName="emailAddress"
+          placeholder="Enter your email"
+        />
+      </div>
+
+      <div class="mb-3">
+        <label for="password" class="form-label">Password</label>
+        <input
+          id="password"
+          class="form-control"
+          [type]="showPassword ? 'text' : 'password'"
+          formControlName="password"
+          placeholder="Create a password"
+        />
+      </div>
+
+      <div class="mb-3">
+        <label for="appName" class="form-label">App Name</label>
+        <input
+          id="appName"
+          class="form-control"
+          type="text"
+          formControlName="appName"
+          placeholder="App name"
+        />
+      </div>
+
+      <button type="submit" class="btn btn-success w-100">Sign Up</button>
+    </form>
+  </div>
+</div>

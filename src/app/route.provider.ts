@@ -15,6 +15,13 @@ function configureRoutes(routesService: RoutesService) {
         order: 1,
         layout: eLayoutType.application,
       },
+      {
+        path: 'card',
+        name: 'Card',
+        iconClass: 'fas fa-shopping-cart',
+        order: 1,
+        layout: eLayoutType.application,
+      },
     ]);
   };
 }

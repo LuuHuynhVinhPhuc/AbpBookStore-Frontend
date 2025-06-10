@@ -1,0 +1,69 @@
+// Nền tổng thể nhẹ nhàng
+.dashboard-bg {
+  background: #f7f7fa;
+  min-height: 100vh;
+}
+
+// Banner/Hero
+.dashboard-bg .container .row {
+  align-items: center;
+}
+
+img.img-fluid {
+  max-height: 180px;
+}
+
+// Quick Stats
+.card {
+  border-radius: 14px;
+}
+
+.card .fs-3 {
+  font-size: 2rem !important;
+}
+
+// Featured Books
+.book-card {
+  transition: box-shadow 0.2s;
+  border-radius: 12px;
+}
+.book-card:hover {
+  box-shadow: 0 4px 24px rgba(61,90,254,0.08);
+  transform: translateY(-2px) scale(1.02);
+}
+.book-thumb {
+  height: 160px;
+  object-fit: cover;
+  border-radius: 10px 10px 0 0;
+}
+
+.btn-outline-primary {
+  border-color: #3d5afe;
+  color: #3d5afe;
+}
+.btn-outline-primary:hover {
+  background: #3d5afe;
+  color: #fff;
+}
+
+.btn-primary {
+  background: #3d5afe;
+  border-color: #3d5afe;
+}
+.btn-primary:active, .btn-primary:focus {
+  background: #304ffe;
+  border-color: #304ffe;
+}
+
+@media (max-width: 991px) {
+  .dashboard-bg .container {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+  }
+  .book-thumb {
+    height: 120px;
+  }
+  img.img-fluid {
+    max-height: 120px;
+  }
+}
