@@ -4,6 +4,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { BookService } from '@proxy/marcus/book-store/books';
+import { BookType } from '@proxy/marcus/book-store/books/book-type.enum';
 import { BookDTO } from '@proxy/marcus/book-store/books/dtos';
 import { CartService } from '../card/services/cart.service';
 
@@ -58,6 +59,31 @@ export class ProductDetailComponent implements OnInit {
     if (this.data) {
       this.cartService.addToCart(this.data);
       this.router.navigate(['/checkout']);
+    }
+  }
+
+  getBookTypeText(type: number): string {
+    switch (type) {
+      case BookType.Undefined:
+        return 'Undefined';
+      case BookType.Adventure:
+        return 'Adventure';
+      case BookType.Biography:
+        return 'Biography';
+      case BookType.Dystopia:
+        return 'Dystopia';
+      case BookType.Fantastic:
+        return 'Fantastic';
+      case BookType.Horror:
+        return 'Horror';
+      case BookType.Science:
+        return 'Science';
+      case BookType.ScienceFiction:
+        return 'Science Fiction';
+      case BookType.Poetry:
+        return 'Poetry';
+      default:
+        return 'Unknown Type';
     }
   }
 }

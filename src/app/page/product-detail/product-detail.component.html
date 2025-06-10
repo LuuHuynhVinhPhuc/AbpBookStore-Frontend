@@ -1,20 +1,37 @@
 <div class="container mt-4" *ngIf="data">
   <div class="row">
     <div class="col-md-6">
-      <img [src]="data.image" class="img-fluid" [alt]="data.title" />
+      <img [src]="data.image" class="img-fluid" [alt]="data.name" />
     </div>
     <div class="col-md-6">
-      <h1>{{ data.title }}</h1>
-      <p class="text-muted">Tác giả: {{ data.author }}</p>
+      <h1>{{ data.name }}</h1>
+
+      <!-- Authors Section -->
+      <div class="authors-section mb-3">
+        <div class="author-list">
+          <div class="author-item" *ngFor="let author of data.authors">
+            <h5>Author: {{ author.name }}</h5>
+            <p class="text-muted">Date of birth: {{ author.birthdate | date : 'dd/MM/yyyy' }}</p>
+            <p class="author-bio">Short bio: {{ author.shortBio }}</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Book Details -->
+      <div class="book-details mb-3">
+        <p class="text-muted">Publish date: {{ data.publishDate | date : 'dd/MM/yyyy' }}</p>
+        <p class="text-muted">Book Type: {{ getBookTypeText(data.type) }}</p>
+      </div>
+
       <h2 class="text-danger">{{ data.price | currency : 'VND' }}</h2>
       <p>{{ data.description }}</p>
 
       <div class="d-grid gap-2">
         <button class="btn btn-primary" (click)="addToCart()">
-          <i class="bi bi-cart-plus"></i> Thêm vào giỏ hàng
+          <i class="bi bi-cart-plus"></i> Add to Cart
         </button>
         <button class="btn btn-success" (click)="buyNow()">
-          <i class="bi bi-lightning"></i> Mua ngay
+          <i class="bi bi-lightning"></i> Buy it now
         </button>
       </div>
     </div>
