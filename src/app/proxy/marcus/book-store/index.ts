@@ -1,4 +1,6 @@
 import * as Authorization from './authorization';
 import * as Authors from './authors';
 import * as Books from './books';
-export { Authorization, Authors, Books };
+import * as OrderItems from './order-items';
+import * as Orders from './orders';
+export { Authorization, Authors, Books, OrderItems, Orders };
