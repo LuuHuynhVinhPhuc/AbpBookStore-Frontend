@@ -33,10 +33,6 @@ const routes: Routes = [
         loadComponent: () =>
           import('./page/checkout/checkout.component').then(m => m.CheckoutComponent),
       },
-      {
-        path: 'auth',
-        loadComponent: () => import('./page/auth/auth.component').then(m => m.AuthComponent),
-      },
     ],
   },
   {

@@ -23,4 +23,5 @@ export const environment = {
       rootNamespace: 'BookStore',
     },
   },
+  apiBaseUrl: 'https://localhost:44332/api',
 } as Environment;

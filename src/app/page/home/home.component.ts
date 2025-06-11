@@ -20,8 +20,4 @@ export class HomeComponent {
   get hasLoggedIn(): boolean {
     return this.authService.isAuthenticated;
   }
-
-  login() {
-    this.authService.navigateToLogin();
-  }
 }

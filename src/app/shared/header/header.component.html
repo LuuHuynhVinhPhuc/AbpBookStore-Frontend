@@ -10,9 +10,11 @@
     <button
       class="navbar-toggler"
       type="button"
-      title="colapse"
       data-bs-toggle="collapse"
       data-bs-target="#navbarContent"
+      aria-controls="navbarContent"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
     >
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -20,10 +22,17 @@
     <!-- Navbar Content -->
     <div class="collapse navbar-collapse" id="navbarContent">
       <!-- Left Side Menu -->
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0"></ul>
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/books"></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/categories"></a>
+        </li>
+      </ul>
 
       <!-- Right Side Menu -->
-      <ul class="navbar-nav">
+      <ul class="navbar-nav align-items-center">
         <!-- Search Form -->
         <li class="nav-item me-3">
           <form class="d-flex">
@@ -39,44 +48,61 @@
           </form>
         </li>
 
-        <!-- User Menu -->
-        <li class="nav-item dropdown" *ngIf="hasLoggedIn">
+        <!-- User Menu (When Logged In) -->
+        <li class="nav-item" *ngIf="hasLoggedIn" ngbDropdown>
           <a
             class="nav-link dropdown-toggle d-flex align-items-center"
-            href="#"
             id="userDropdown"
-            role="button"
-            data-bs-toggle="dropdown"
+            ngbDropdownToggle
           >
-            <i class="fas fa-user-circle me-1"></i>
-            <span>Account</span>
+            <img
+              [src]="currentUser.avatar"
+              class="rounded-circle me-2"
+              width="32"
+              height="32"
+              alt="User avatar"
+            />
+            <span class="d-none d-md-inline">{{ currentUser.name }}</span>
           </a>
-          <ul class="dropdown-menu dropdown-menu-end">
-            <li>
-              <a class="dropdown-item" routerLink="/checkout">
-                <i class="fas fa-credit-card me-2"></i>
-                Checkout
-              </a>
-            </li>
-            <li><hr class="dropdown-divider" /></li>
-            <li>
-              <a class="dropdown-item text-danger" (click)="logout()">
-                <i class="fas fa-sign-out-alt me-2"></i>
-                Logout
-              </a>
-            </li>
-          </ul>
+          <div
+            ngbDropdownMenu
+            class="dropdown-menu dropdown-menu-end"
+            aria-labelledby="userDropdown"
+          >
+            <button ngbDropdownItem (click)="navigateToProfile()">
+              <i class="fas fa-user me-2"></i>
+              Profile
+            </button>
+            <button ngbDropdownItem (click)="navigateToOrders()">
+              <i class="fas fa-shopping-bag me-2"></i>
+              My Orders
+            </button>
+            <button ngbDropdownItem (click)="navigateToMessages()">
+              <i class="fas fa-envelope me-2"></i>
+              Messages
+              <span class="badge bg-danger ms-2">3</span>
+            </button>
+            <button ngbDropdownItem (click)="navigateToSettings()">
+              <i class="fas fa-cog me-2"></i>
+              Settings
+            </button>
+            <div class="dropdown-divider"></div>
+            <button ngbDropdownItem class="text-danger" (click)="logout()">
+              <i class="fas fa-sign-out-alt me-2"></i>
+              Logout
+            </button>
+          </div>
         </li>
 
-        <!-- Login/Register Buttons -->
+        <!-- Login/Register Buttons (When Not Logged In) -->
         <li class="nav-item" *ngIf="!hasLoggedIn">
           <button class="btn btn-outline-primary me-2" (click)="login()">
             <i class="fas fa-sign-in-alt me-1"></i>
             Login
           </button>
-          <button class="btn btn-primary" (click)="register()">
-            <i class="fas fa-user-plus me-1"></i>
-            Register
+          <button class="btn btn-outline-primary me-2" (click)="authentication()">
+            <i class="fas fa-sign-in-alt me-1"></i>
+            Authentication
           </button>
         </li>
       </ul>
