@@ -6,11 +6,14 @@
   </div>
 
   <app-data-table
+    [records]="authorService.data.items"
     [itemRemove]="true"
     [itemEdit]="true"
-    [records]="data.items"
+    [isActivePaging]="true"
+    [totalCount]="authorService.data.totalCount"
     (removeItemHandler)="deleteAuthor($event.entry)"
     (editItemHandler)="editAuthor($event.entry)"
+    (changedPaging)="onChangePage($event)"
   >
     <app-header name="action"></app-header>
     <app-header title="Name" name="name"></app-header>
@@ -19,7 +22,7 @@
 
     <app-column type="action"></app-column>
     <app-column value="name"></app-column>
-    <app-column value="birthdate" columnType="date" [formatter]="formatDate"></app-column>
+    <app-column value="birthdate" columnType="date"></app-column>
     <app-column value="shortBio"></app-column>
   </app-data-table>
 </div>

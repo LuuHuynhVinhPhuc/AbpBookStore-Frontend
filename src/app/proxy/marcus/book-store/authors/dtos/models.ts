@@ -1,4 +1,4 @@
-import type { EntityDto, PagedAndSortedResultRequestDto } from '@abp/ng.core';
+import type { EntityDto } from '@abp/ng.core';
 
 export interface AuthorDTO extends EntityDto<string> {
   name?: string;
@@ -6,8 +6,11 @@ export interface AuthorDTO extends EntityDto<string> {
   shortBio?: string;
 }
 
-export interface AuthorPagedAndSortedResultRequestDto extends PagedAndSortedResultRequestDto {
+export interface AuthorPagedAndSortedResultRequestDto {
   filter?: string;
+  pageNumber: number;
+  maxResultCount: number;
+  sorting?: string;
 }
 
 export interface CreateAndUpdateAuthors {

@@ -8,7 +8,8 @@ import { CommonModule } from '@angular/common';
   template: `<a
       *ngIf="isActive"
       (click)="clickAction.emit(); $event.stopPropagation()"
-      class="link-cell {{ cssClass }}">
+      class="link-cell {{ cssClass }}"
+    >
       {{ formatter(value, entry) }}
     </a>
     <a *ngIf="!isActive" class="no-link-cell {{ cssClass }}">{{ formatter(value, entry) }}</a>`,

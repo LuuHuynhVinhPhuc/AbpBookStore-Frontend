@@ -11,7 +11,7 @@
         <div class="author-list">
           <div class="author-item" *ngFor="let author of data.authors">
             <h5>Author: {{ author.name }}</h5>
-            <p class="text-muted">Date of birth: {{ author.birthdate | date : 'dd/MM/yyyy' }}</p>
+            <p class="text-muted">Date of birth: {{ author.birthdate | date: 'dd/MM/yyyy' }}</p>
             <p class="author-bio">Short bio: {{ author.shortBio }}</p>
           </div>
         </div>
@@ -19,12 +19,11 @@
 
       <!-- Book Details -->
       <div class="book-details mb-3">
-        <p class="text-muted">Publish date: {{ data.publishDate | date : 'dd/MM/yyyy' }}</p>
+        <p class="text-muted">Publish date: {{ data.publishDate | date: 'dd/MM/yyyy' }}</p>
         <p class="text-muted">Book Type: {{ getBookTypeText(data.type) }}</p>
       </div>
 
-      <h2 class="text-danger">{{ data.price | currency : 'VND' }}</h2>
-      <p>{{ data.description }}</p>
+      <h2 class="text-danger">{{ data.price | currency: 'VND' }}</h2>
 
       <div class="d-grid gap-2">
         <button class="btn btn-primary" (click)="addToCart()">

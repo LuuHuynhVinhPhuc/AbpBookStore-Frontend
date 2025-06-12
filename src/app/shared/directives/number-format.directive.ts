@@ -13,7 +13,10 @@ export class NumberFormatDirective implements OnInit {
 
   private originalValue: string | null = null;
 
-  constructor(private el: ElementRef, @Optional() private control: NgControl) {}
+  constructor(
+    private el: ElementRef,
+    @Optional() private control: NgControl
+  ) {}
 
   ngOnInit(): void {
     this.formatInitialValue();

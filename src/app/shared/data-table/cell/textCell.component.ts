@@ -22,7 +22,10 @@ export class TextCellComponent implements OnInit {
   public isShowTooltip: boolean = false;
   public isCollapse: boolean = true;
 
-  constructor(protected elRef: ElementRef, protected render: Renderer2) {}
+  constructor(
+    protected elRef: ElementRef,
+    protected render: Renderer2
+  ) {}
 
   ngOnInit() {
     if (!this.formatter) {

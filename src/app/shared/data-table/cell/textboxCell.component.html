@@ -1,6 +1,12 @@
 @switch (typeControl) {
   @case ('number') {
-    <input type="number" [disabled]="disabled" class="form-control textbox-cell" [(ngModel)]="value" [name]="name" />
+    <input
+      type="number"
+      [disabled]="disabled"
+      class="form-control textbox-cell"
+      [(ngModel)]="value"
+      [name]="name"
+    />
   }
   @case ('percent') {
     <input
@@ -8,7 +14,8 @@
       class="form-control textbox-cell text-end"
       [disabled]="disabled"
       [(ngModel)]="value"
-      [name]="name" />
+      [name]="name"
+    />
     <!-- (ngModelChange)="value = $event" -->
     <!-- [ngModel]="value | formatterPercent" -->
   }

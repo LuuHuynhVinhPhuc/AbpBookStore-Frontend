@@ -14,10 +14,7 @@ import {
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { AuthorService } from '@proxy/marcus/book-store/authors';
-import {
-  AuthorDTO,
-  AuthorPagedAndSortedResultRequestDto,
-} from '@proxy/marcus/book-store/authors/dtos';
+import { AuthorDTO } from '@proxy/marcus/book-store/authors/dtos';
 import { BookService } from '@proxy/marcus/book-store/books';
 import { BookType } from '@proxy/marcus/book-store/books/book-type.enum';
 import { BookDTO, UpdateBookDTO } from '@proxy/marcus/book-store/books/dtos';
@@ -65,29 +62,10 @@ export class BookmanagementComponent implements OnInit {
   @ViewChild('addBookModal') addBookModal: any;
 
   ngOnInit(): void {
-    this.bookService.hooktoQuery();
+    this.bookService.hookToQuery();
     console.log(this.bookService.data);
 
     this.initBookForm();
-    this.getAuthors();
-  }
-
-  getAuthors() {
-    const authorRequest: AuthorPagedAndSortedResultRequestDto = {
-      maxResultCount: 1000, // Or a dynamic page size
-      skipCount: 0,
-      sorting: 'name asc',
-      filter: '',
-    };
-    this.authorService.getList(authorRequest).subscribe({
-      next: res => {
-        this.authors = res.items;
-      },
-      error: error => {
-        console.error('Error fetching authors:', error);
-        this.toaster.error('Failed to load authors.', 'Error');
-      },
-    });
   }
 
   initBookForm() {
@@ -126,17 +104,17 @@ export class BookmanagementComponent implements OnInit {
   editBook(book: BookDTO) {
     this.editingBookId = book.id;
     this.bookServiceProxy.get(book.id!).subscribe({
-      next: retrievedBook => {
+      next: (retrievedBook) => {
         this.bookForm.patchValue({
           name: retrievedBook.name,
           type: retrievedBook.type,
           publishDate: retrievedBook.publishDate ? retrievedBook.publishDate.split('T')[0] : null, // Format date for input type="date"
           price: retrievedBook.price,
-          authorIds: retrievedBook.authors ? retrievedBook.authors.map(a => a.id) : [],
+          authorIds: retrievedBook.authors ? retrievedBook.authors.map((a) => a.id) : [],
         });
         this.modalService.open(this.addBookModal, { size: 'lg' });
       },
-      error: error => {
+      error: (error) => {
         console.error('Error fetching book for edit:', error);
         this.toaster.error('Failed to load book details for editing.', 'Error');
       },
@@ -168,11 +146,11 @@ export class BookmanagementComponent implements OnInit {
       this.bookServiceProxy.update(this.editingBookId, bookDto).subscribe({
         next: () => {
           modal.close();
-          this.bookService.hooktoQuery(); // reload danh sách
+          this.bookService.hookToQuery(); // reload danh sách
           this.toaster.success('Book updated successfully!', 'Success');
           this.editingBookId = null;
         },
-        error: error => {
+        error: (error) => {
           console.error('Error updating book:', error);
           this.toaster.error(
             error?.error?.message || 'An unexpected error occurred during update.',
@@ -185,10 +163,10 @@ export class BookmanagementComponent implements OnInit {
       this.bookServiceProxy.create(bookDto).subscribe({
         next: () => {
           modal.close();
-          this.bookService.hooktoQuery();
+          this.bookService.hookToQuery();
           this.toaster.success('Book added successfully!', 'Success');
         },
-        error: error => {
+        error: (error) => {
           console.error('Error adding book:', error);
           this.toaster.error(
             error?.error?.message || 'An unexpected error occurred during creation.',
@@ -225,6 +203,6 @@ export class BookmanagementComponent implements OnInit {
   }
 
   getAuthorNames(authors: AuthorDTO[]): string {
-    return authors && authors.length > 0 ? authors.map(a => a.name).join(', ') : 'Unknown';
+    return authors && authors.length > 0 ? authors.map((a) => a.name).join(', ') : 'Unknown';
   }
 }

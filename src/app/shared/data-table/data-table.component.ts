@@ -83,7 +83,7 @@ export class DataTableComponent {
   // Paging
   @Input() isActivePaging: boolean;
   @Input() totalCount: number;
-  @Input() pageSize: number = 10;
+  @Input() pageSize: number = 5;
   @Input() positionPaging: PaginationPosition = 'bottom-right';
 
   @Output() editItemHandler = new EventEmitter<any>();
@@ -102,7 +102,7 @@ export class DataTableComponent {
     if (!path) return undefined;
 
     // Split the path into an array of keys
-    const keys = path.split('.').map(key => key.replace('?', '')); // Remove optional chaining symbols
+    const keys = path.split('.').map((key) => key.replace('?', '')); // Remove optional chaining symbols
 
     // Recursive traversal
     return keys.reduce((obj, key) => {
@@ -149,7 +149,7 @@ export class DataTableComponent {
       !$event.target.classList.contains('check') &&
       this.selectionType === SelectionType.single
     ) {
-      this.records.map(r => (r.isFocused = false));
+      this.records.map((r) => (r.isFocused = false));
       data.isFocused = !data.isFocused;
       this.clickedRowHandler.emit(data);
     }

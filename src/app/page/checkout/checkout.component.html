@@ -86,21 +86,21 @@
                 <div class="text-muted small">x{{ item.quantity }}</div>
               </div>
               <div class="fw-bold text-primary">
-                {{ item.book.price * item.quantity | currency : 'VND' }}
+                {{ item.book.price * item.quantity | currency: 'VND' }}
               </div>
             </div>
             <hr />
             <div class="d-flex justify-content-between mb-1 small">
               <span>Subtotal</span>
-              <span>{{ subtotal | currency : 'VND' }}</span>
+              <span>{{ subtotal | currency: 'VND' }}</span>
             </div>
             <div class="d-flex justify-content-between mb-1 small">
               <span>Shipping</span>
-              <span>{{ shipping === 0 ? 'Free' : (shipping | currency : 'VND') }}</span>
+              <span>{{ shipping === 0 ? 'Free' : (shipping | currency: 'VND') }}</span>
             </div>
             <div class="d-flex justify-content-between mt-2">
               <strong>Total</strong>
-              <strong>{{ total | currency : 'VND' }}</strong>
+              <strong>{{ total | currency: 'VND' }}</strong>
             </div>
           </div>
         </div>

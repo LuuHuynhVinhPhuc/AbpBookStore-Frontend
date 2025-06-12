@@ -1341,19 +1341,7 @@
                 },
                 {
                   "nameOnMethod": "input",
-                  "name": "Sorting",
-                  "jsonName": null,
-                  "type": "System.String",
-                  "typeSimple": "string",
-                  "isOptional": false,
-                  "defaultValue": null,
-                  "constraintTypes": null,
-                  "bindingSourceId": "ModelBinding",
-                  "descriptorName": "input"
-                },
-                {
-                  "nameOnMethod": "input",
-                  "name": "SkipCount",
+                  "name": "PageNumber",
                   "jsonName": null,
                   "type": "System.Int32",
                   "typeSimple": "number",
@@ -1374,11 +1362,60 @@
                   "constraintTypes": null,
                   "bindingSourceId": "ModelBinding",
                   "descriptorName": "input"
+                },
+                {
+                  "nameOnMethod": "input",
+                  "name": "Sorting",
+                  "jsonName": null,
+                  "type": "System.String",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "ModelBinding",
+                  "descriptorName": "input"
                 }
               ],
               "returnValue": {
                 "type": "Volo.Abp.Application.Dtos.PagedResultDto<Marcus.BookStore.Authors.DTOs.AuthorDTO>",
                 "typeSimple": "Volo.Abp.Application.Dtos.PagedResultDto<Marcus.BookStore.Authors.DTOs.AuthorDTO>"
+              },
+              "allowAnonymous": true,
+              "implementFrom": "Volo.Abp.Application.Services.IReadOnlyAppService<Marcus.BookStore.Authors.DTOs.AuthorDTO,Marcus.BookStore.Authors.DTOs.AuthorDTO,System.Guid,Marcus.BookStore.Authors.DTOs.AuthorPagedAndSortedResultRequestDto>"
+            },
+            "GetAsyncById": {
+              "uniqueName": "GetAsyncById",
+              "name": "GetAsync",
+              "httpMethod": "GET",
+              "url": "api/app/author/{id}",
+              "supportedVersions": [],
+              "parametersOnMethod": [
+                {
+                  "name": "id",
+                  "typeAsString": "System.Guid, System.Private.CoreLib",
+                  "type": "System.Guid",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null
+                }
+              ],
+              "parameters": [
+                {
+                  "nameOnMethod": "id",
+                  "name": "id",
+                  "jsonName": null,
+                  "type": "System.Guid",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": [],
+                  "bindingSourceId": "Path",
+                  "descriptorName": ""
+                }
+              ],
+              "returnValue": {
+                "type": "Marcus.BookStore.Authors.DTOs.AuthorDTO",
+                "typeSimple": "Marcus.BookStore.Authors.DTOs.AuthorDTO"
               },
               "allowAnonymous": true,
               "implementFrom": "Volo.Abp.Application.Services.IReadOnlyAppService<Marcus.BookStore.Authors.DTOs.AuthorDTO,Marcus.BookStore.Authors.DTOs.AuthorDTO,System.Guid,Marcus.BookStore.Authors.DTOs.AuthorPagedAndSortedResultRequestDto>"
@@ -1419,43 +1456,6 @@
               },
               "allowAnonymous": false,
               "implementFrom": "Volo.Abp.Application.Services.IDeleteAppService<System.Guid>"
-            },
-            "GetAsyncById": {
-              "uniqueName": "GetAsyncById",
-              "name": "GetAsync",
-              "httpMethod": "GET",
-              "url": "api/app/author/{id}",
-              "supportedVersions": [],
-              "parametersOnMethod": [
-                {
-                  "name": "id",
-                  "typeAsString": "System.Guid, System.Private.CoreLib",
-                  "type": "System.Guid",
-                  "typeSimple": "string",
-                  "isOptional": false,
-                  "defaultValue": null
-                }
-              ],
-              "parameters": [
-                {
-                  "nameOnMethod": "id",
-                  "name": "id",
-                  "jsonName": null,
-                  "type": "System.Guid",
-                  "typeSimple": "string",
-                  "isOptional": false,
-                  "defaultValue": null,
-                  "constraintTypes": [],
-                  "bindingSourceId": "Path",
-                  "descriptorName": ""
-                }
-              ],
-              "returnValue": {
-                "type": "Marcus.BookStore.Authors.DTOs.AuthorDTO",
-                "typeSimple": "Marcus.BookStore.Authors.DTOs.AuthorDTO"
-              },
-              "allowAnonymous": false,
-              "implementFrom": "Volo.Abp.Application.Services.IReadOnlyAppService<Marcus.BookStore.Authors.DTOs.AuthorDTO,Marcus.BookStore.Authors.DTOs.AuthorDTO,System.Guid,Marcus.BookStore.Authors.DTOs.AuthorPagedAndSortedResultRequestDto>"
             }
           }
         },
@@ -1693,19 +1693,7 @@
                 },
                 {
                   "nameOnMethod": "input",
-                  "name": "Sorting",
-                  "jsonName": null,
-                  "type": "System.String",
-                  "typeSimple": "string",
-                  "isOptional": false,
-                  "defaultValue": null,
-                  "constraintTypes": null,
-                  "bindingSourceId": "ModelBinding",
-                  "descriptorName": "input"
-                },
-                {
-                  "nameOnMethod": "input",
-                  "name": "SkipCount",
+                  "name": "PageNumber",
                   "jsonName": null,
                   "type": "System.Int32",
                   "typeSimple": "number",
@@ -1721,6 +1709,18 @@
                   "jsonName": null,
                   "type": "System.Int32",
                   "typeSimple": "number",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "ModelBinding",
+                  "descriptorName": "input"
+                },
+                {
+                  "nameOnMethod": "input",
+                  "name": "Sorting",
+                  "jsonName": null,
+                  "type": "System.String",
+                  "typeSimple": "string",
                   "isOptional": false,
                   "defaultValue": null,
                   "constraintTypes": null,
@@ -1954,7 +1954,7 @@
                 "type": "Marcus.BookStore.OrderItems.DTOs.OrderItemDTO",
                 "typeSimple": "Marcus.BookStore.OrderItems.DTOs.OrderItemDTO"
               },
-              "allowAnonymous": null,
+              "allowAnonymous": false,
               "implementFrom": "Volo.Abp.Application.Services.ICreateAppService<Marcus.BookStore.OrderItems.DTOs.OrderItemDTO,Marcus.BookStore.OrderItems.DTOs.CreateAndUpdateOrderItemDTO>"
             },
             "UpdateAsyncByIdAndInput": {
@@ -2011,7 +2011,7 @@
                 "type": "Marcus.BookStore.OrderItems.DTOs.OrderItemDTO",
                 "typeSimple": "Marcus.BookStore.OrderItems.DTOs.OrderItemDTO"
               },
-              "allowAnonymous": null,
+              "allowAnonymous": false,
               "implementFrom": "Volo.Abp.Application.Services.IUpdateAppService<Marcus.BookStore.OrderItems.DTOs.OrderItemDTO,System.Guid,Marcus.BookStore.OrderItems.DTOs.CreateAndUpdateOrderItemDTO>"
             },
             "DeleteAsyncById": {
@@ -2048,7 +2048,7 @@
                 "type": "System.Void",
                 "typeSimple": "System.Void"
               },
-              "allowAnonymous": null,
+              "allowAnonymous": false,
               "implementFrom": "Volo.Abp.Application.Services.IDeleteAppService<System.Guid>"
             },
             "GetAsyncById": {
@@ -2085,7 +2085,7 @@
                 "type": "Marcus.BookStore.OrderItems.DTOs.OrderItemDTO",
                 "typeSimple": "Marcus.BookStore.OrderItems.DTOs.OrderItemDTO"
               },
-              "allowAnonymous": null,
+              "allowAnonymous": false,
               "implementFrom": "Volo.Abp.Application.Services.IReadOnlyAppService<Marcus.BookStore.OrderItems.DTOs.OrderItemDTO,Marcus.BookStore.OrderItems.DTOs.OrderItemDTO,System.Guid,Marcus.BookStore.OrderItems.DTOs.OrderItemPageAndSortResultRequestDTO>"
             },
             "GetListAsyncByInput": {
@@ -2158,7 +2158,7 @@
                 "type": "Volo.Abp.Application.Dtos.PagedResultDto<Marcus.BookStore.OrderItems.DTOs.OrderItemDTO>",
                 "typeSimple": "Volo.Abp.Application.Dtos.PagedResultDto<Marcus.BookStore.OrderItems.DTOs.OrderItemDTO>"
               },
-              "allowAnonymous": null,
+              "allowAnonymous": false,
               "implementFrom": "Volo.Abp.Application.Services.IReadOnlyAppService<Marcus.BookStore.OrderItems.DTOs.OrderItemDTO,Marcus.BookStore.OrderItems.DTOs.OrderItemDTO,System.Guid,Marcus.BookStore.OrderItems.DTOs.OrderItemPageAndSortResultRequestDTO>"
             }
           }
@@ -2272,174 +2272,6 @@
             }
           ],
           "actions": {
-            "CreateAsyncByInput": {
-              "uniqueName": "CreateAsyncByInput",
-              "name": "CreateAsync",
-              "httpMethod": "POST",
-              "url": "api/app/order",
-              "supportedVersions": [],
-              "parametersOnMethod": [
-                {
-                  "name": "input",
-                  "typeAsString": "Marcus.BookStore.Orders.DTOs.OrderCreateandUpdateDTO, Marcus.BookStore.Application.Contracts",
-                  "type": "Marcus.BookStore.Orders.DTOs.OrderCreateandUpdateDTO",
-                  "typeSimple": "Marcus.BookStore.Orders.DTOs.OrderCreateandUpdateDTO",
-                  "isOptional": false,
-                  "defaultValue": null
-                }
-              ],
-              "parameters": [
-                {
-                  "nameOnMethod": "input",
-                  "name": "input",
-                  "jsonName": null,
-                  "type": "Marcus.BookStore.Orders.DTOs.OrderCreateandUpdateDTO",
-                  "typeSimple": "Marcus.BookStore.Orders.DTOs.OrderCreateandUpdateDTO",
-                  "isOptional": false,
-                  "defaultValue": null,
-                  "constraintTypes": null,
-                  "bindingSourceId": "Body",
-                  "descriptorName": ""
-                }
-              ],
-              "returnValue": {
-                "type": "Marcus.BookStore.Orders.DTOs.OrderDTO",
-                "typeSimple": "Marcus.BookStore.Orders.DTOs.OrderDTO"
-              },
-              "allowAnonymous": null,
-              "implementFrom": "Volo.Abp.Application.Services.ICreateAppService<Marcus.BookStore.Orders.DTOs.OrderDTO,Marcus.BookStore.Orders.DTOs.OrderCreateandUpdateDTO>"
-            },
-            "UpdateAsyncByIdAndInput": {
-              "uniqueName": "UpdateAsyncByIdAndInput",
-              "name": "UpdateAsync",
-              "httpMethod": "PUT",
-              "url": "api/app/order/{id}",
-              "supportedVersions": [],
-              "parametersOnMethod": [
-                {
-                  "name": "id",
-                  "typeAsString": "System.Guid, System.Private.CoreLib",
-                  "type": "System.Guid",
-                  "typeSimple": "string",
-                  "isOptional": false,
-                  "defaultValue": null
-                },
-                {
-                  "name": "input",
-                  "typeAsString": "Marcus.BookStore.Orders.DTOs.OrderCreateandUpdateDTO, Marcus.BookStore.Application.Contracts",
-                  "type": "Marcus.BookStore.Orders.DTOs.OrderCreateandUpdateDTO",
-                  "typeSimple": "Marcus.BookStore.Orders.DTOs.OrderCreateandUpdateDTO",
-                  "isOptional": false,
-                  "defaultValue": null
-                }
-              ],
-              "parameters": [
-                {
-                  "nameOnMethod": "id",
-                  "name": "id",
-                  "jsonName": null,
-                  "type": "System.Guid",
-                  "typeSimple": "string",
-                  "isOptional": false,
-                  "defaultValue": null,
-                  "constraintTypes": [],
-                  "bindingSourceId": "Path",
-                  "descriptorName": ""
-                },
-                {
-                  "nameOnMethod": "input",
-                  "name": "input",
-                  "jsonName": null,
-                  "type": "Marcus.BookStore.Orders.DTOs.OrderCreateandUpdateDTO",
-                  "typeSimple": "Marcus.BookStore.Orders.DTOs.OrderCreateandUpdateDTO",
-                  "isOptional": false,
-                  "defaultValue": null,
-                  "constraintTypes": null,
-                  "bindingSourceId": "Body",
-                  "descriptorName": ""
-                }
-              ],
-              "returnValue": {
-                "type": "Marcus.BookStore.Orders.DTOs.OrderDTO",
-                "typeSimple": "Marcus.BookStore.Orders.DTOs.OrderDTO"
-              },
-              "allowAnonymous": null,
-              "implementFrom": "Volo.Abp.Application.Services.IUpdateAppService<Marcus.BookStore.Orders.DTOs.OrderDTO,System.Guid,Marcus.BookStore.Orders.DTOs.OrderCreateandUpdateDTO>"
-            },
-            "DeleteAsyncById": {
-              "uniqueName": "DeleteAsyncById",
-              "name": "DeleteAsync",
-              "httpMethod": "DELETE",
-              "url": "api/app/order/{id}",
-              "supportedVersions": [],
-              "parametersOnMethod": [
-                {
-                  "name": "id",
-                  "typeAsString": "System.Guid, System.Private.CoreLib",
-                  "type": "System.Guid",
-                  "typeSimple": "string",
-                  "isOptional": false,
-                  "defaultValue": null
-                }
-              ],
-              "parameters": [
-                {
-                  "nameOnMethod": "id",
-                  "name": "id",
-                  "jsonName": null,
-                  "type": "System.Guid",
-                  "typeSimple": "string",
-                  "isOptional": false,
-                  "defaultValue": null,
-                  "constraintTypes": [],
-                  "bindingSourceId": "Path",
-                  "descriptorName": ""
-                }
-              ],
-              "returnValue": {
-                "type": "System.Void",
-                "typeSimple": "System.Void"
-              },
-              "allowAnonymous": null,
-              "implementFrom": "Volo.Abp.Application.Services.IDeleteAppService<System.Guid>"
-            },
-            "GetAsyncById": {
-              "uniqueName": "GetAsyncById",
-              "name": "GetAsync",
-              "httpMethod": "GET",
-              "url": "api/app/order/{id}",
-              "supportedVersions": [],
-              "parametersOnMethod": [
-                {
-                  "name": "id",
-                  "typeAsString": "System.Guid, System.Private.CoreLib",
-                  "type": "System.Guid",
-                  "typeSimple": "string",
-                  "isOptional": false,
-                  "defaultValue": null
-                }
-              ],
-              "parameters": [
-                {
-                  "nameOnMethod": "id",
-                  "name": "id",
-                  "jsonName": null,
-                  "type": "System.Guid",
-                  "typeSimple": "string",
-                  "isOptional": false,
-                  "defaultValue": null,
-                  "constraintTypes": [],
-                  "bindingSourceId": "Path",
-                  "descriptorName": ""
-                }
-              ],
-              "returnValue": {
-                "type": "Marcus.BookStore.Orders.DTOs.OrderDTO",
-                "typeSimple": "Marcus.BookStore.Orders.DTOs.OrderDTO"
-              },
-              "allowAnonymous": null,
-              "implementFrom": "Volo.Abp.Application.Services.IReadOnlyAppService<Marcus.BookStore.Orders.DTOs.OrderDTO,Marcus.BookStore.Orders.DTOs.OrderDTO,System.Guid,Marcus.BookStore.Orders.DTOs.OrderItemPageAndSortSesultRequestDTO>"
-            },
             "GetListAsyncByInput": {
               "uniqueName": "GetListAsyncByInput",
               "name": "GetListAsync",
@@ -2510,8 +2342,176 @@
                 "type": "Volo.Abp.Application.Dtos.PagedResultDto<Marcus.BookStore.Orders.DTOs.OrderDTO>",
                 "typeSimple": "Volo.Abp.Application.Dtos.PagedResultDto<Marcus.BookStore.Orders.DTOs.OrderDTO>"
               },
-              "allowAnonymous": null,
+              "allowAnonymous": true,
               "implementFrom": "Volo.Abp.Application.Services.IReadOnlyAppService<Marcus.BookStore.Orders.DTOs.OrderDTO,Marcus.BookStore.Orders.DTOs.OrderDTO,System.Guid,Marcus.BookStore.Orders.DTOs.OrderItemPageAndSortSesultRequestDTO>"
+            },
+            "GetAsyncById": {
+              "uniqueName": "GetAsyncById",
+              "name": "GetAsync",
+              "httpMethod": "GET",
+              "url": "api/app/order/{id}",
+              "supportedVersions": [],
+              "parametersOnMethod": [
+                {
+                  "name": "id",
+                  "typeAsString": "System.Guid, System.Private.CoreLib",
+                  "type": "System.Guid",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null
+                }
+              ],
+              "parameters": [
+                {
+                  "nameOnMethod": "id",
+                  "name": "id",
+                  "jsonName": null,
+                  "type": "System.Guid",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": [],
+                  "bindingSourceId": "Path",
+                  "descriptorName": ""
+                }
+              ],
+              "returnValue": {
+                "type": "Marcus.BookStore.Orders.DTOs.OrderDTO",
+                "typeSimple": "Marcus.BookStore.Orders.DTOs.OrderDTO"
+              },
+              "allowAnonymous": true,
+              "implementFrom": "Volo.Abp.Application.Services.IReadOnlyAppService<Marcus.BookStore.Orders.DTOs.OrderDTO,Marcus.BookStore.Orders.DTOs.OrderDTO,System.Guid,Marcus.BookStore.Orders.DTOs.OrderItemPageAndSortSesultRequestDTO>"
+            },
+            "CreateAsyncByInput": {
+              "uniqueName": "CreateAsyncByInput",
+              "name": "CreateAsync",
+              "httpMethod": "POST",
+              "url": "api/app/order",
+              "supportedVersions": [],
+              "parametersOnMethod": [
+                {
+                  "name": "input",
+                  "typeAsString": "Marcus.BookStore.Orders.DTOs.OrderCreateandUpdateDTO, Marcus.BookStore.Application.Contracts",
+                  "type": "Marcus.BookStore.Orders.DTOs.OrderCreateandUpdateDTO",
+                  "typeSimple": "Marcus.BookStore.Orders.DTOs.OrderCreateandUpdateDTO",
+                  "isOptional": false,
+                  "defaultValue": null
+                }
+              ],
+              "parameters": [
+                {
+                  "nameOnMethod": "input",
+                  "name": "input",
+                  "jsonName": null,
+                  "type": "Marcus.BookStore.Orders.DTOs.OrderCreateandUpdateDTO",
+                  "typeSimple": "Marcus.BookStore.Orders.DTOs.OrderCreateandUpdateDTO",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "Body",
+                  "descriptorName": ""
+                }
+              ],
+              "returnValue": {
+                "type": "Marcus.BookStore.Orders.DTOs.OrderDTO",
+                "typeSimple": "Marcus.BookStore.Orders.DTOs.OrderDTO"
+              },
+              "allowAnonymous": false,
+              "implementFrom": "Volo.Abp.Application.Services.ICreateAppService<Marcus.BookStore.Orders.DTOs.OrderDTO,Marcus.BookStore.Orders.DTOs.OrderCreateandUpdateDTO>"
+            },
+            "UpdateAsyncByIdAndInput": {
+              "uniqueName": "UpdateAsyncByIdAndInput",
+              "name": "UpdateAsync",
+              "httpMethod": "PUT",
+              "url": "api/app/order/{id}",
+              "supportedVersions": [],
+              "parametersOnMethod": [
+                {
+                  "name": "id",
+                  "typeAsString": "System.Guid, System.Private.CoreLib",
+                  "type": "System.Guid",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null
+                },
+                {
+                  "name": "input",
+                  "typeAsString": "Marcus.BookStore.Orders.DTOs.OrderCreateandUpdateDTO, Marcus.BookStore.Application.Contracts",
+                  "type": "Marcus.BookStore.Orders.DTOs.OrderCreateandUpdateDTO",
+                  "typeSimple": "Marcus.BookStore.Orders.DTOs.OrderCreateandUpdateDTO",
+                  "isOptional": false,
+                  "defaultValue": null
+                }
+              ],
+              "parameters": [
+                {
+                  "nameOnMethod": "id",
+                  "name": "id",
+                  "jsonName": null,
+                  "type": "System.Guid",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": [],
+                  "bindingSourceId": "Path",
+                  "descriptorName": ""
+                },
+                {
+                  "nameOnMethod": "input",
+                  "name": "input",
+                  "jsonName": null,
+                  "type": "Marcus.BookStore.Orders.DTOs.OrderCreateandUpdateDTO",
+                  "typeSimple": "Marcus.BookStore.Orders.DTOs.OrderCreateandUpdateDTO",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "Body",
+                  "descriptorName": ""
+                }
+              ],
+              "returnValue": {
+                "type": "Marcus.BookStore.Orders.DTOs.OrderDTO",
+                "typeSimple": "Marcus.BookStore.Orders.DTOs.OrderDTO"
+              },
+              "allowAnonymous": false,
+              "implementFrom": "Volo.Abp.Application.Services.IUpdateAppService<Marcus.BookStore.Orders.DTOs.OrderDTO,System.Guid,Marcus.BookStore.Orders.DTOs.OrderCreateandUpdateDTO>"
+            },
+            "DeleteAsyncById": {
+              "uniqueName": "DeleteAsyncById",
+              "name": "DeleteAsync",
+              "httpMethod": "DELETE",
+              "url": "api/app/order/{id}",
+              "supportedVersions": [],
+              "parametersOnMethod": [
+                {
+                  "name": "id",
+                  "typeAsString": "System.Guid, System.Private.CoreLib",
+                  "type": "System.Guid",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null
+                }
+              ],
+              "parameters": [
+                {
+                  "nameOnMethod": "id",
+                  "name": "id",
+                  "jsonName": null,
+                  "type": "System.Guid",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": [],
+                  "bindingSourceId": "Path",
+                  "descriptorName": ""
+                }
+              ],
+              "returnValue": {
+                "type": "System.Void",
+                "typeSimple": "System.Void"
+              },
+              "allowAnonymous": false,
+              "implementFrom": "Volo.Abp.Application.Services.IDeleteAppService<System.Guid>"
             }
           }
         }
@@ -5206,7 +5206,7 @@
       ]
     },
     "Marcus.BookStore.Authors.DTOs.AuthorPagedAndSortedResultRequestDto": {
-      "baseType": "Volo.Abp.Application.Dtos.PagedAndSortedResultRequestDto",
+      "baseType": null,
       "isEnum": false,
       "enumNames": null,
       "enumValues": null,
@@ -5214,6 +5214,42 @@
       "properties": [
         {
           "name": "Filter",
+          "jsonName": null,
+          "type": "System.String",
+          "typeSimple": "string",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "PageNumber",
+          "jsonName": null,
+          "type": "System.Int32",
+          "typeSimple": "number",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "MaxResultCount",
+          "jsonName": null,
+          "type": "System.Int32",
+          "typeSimple": "number",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "Sorting",
           "jsonName": null,
           "type": "System.String",
           "typeSimple": "string",
@@ -5381,7 +5417,7 @@
       ]
     },
     "Marcus.BookStore.Books.DTOs.BookPagedAndSortedResultRequestDto": {
-      "baseType": "Volo.Abp.Application.Dtos.PagedAndSortedResultRequestDto",
+      "baseType": null,
       "isEnum": false,
       "enumNames": null,
       "enumValues": null,
@@ -5389,6 +5425,42 @@
       "properties": [
         {
           "name": "Filter",
+          "jsonName": null,
+          "type": "System.String",
+          "typeSimple": "string",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "PageNumber",
+          "jsonName": null,
+          "type": "System.Int32",
+          "typeSimple": "number",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "MaxResultCount",
+          "jsonName": null,
+          "type": "System.Int32",
+          "typeSimple": "number",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "Sorting",
           "jsonName": null,
           "type": "System.String",
           "typeSimple": "string",

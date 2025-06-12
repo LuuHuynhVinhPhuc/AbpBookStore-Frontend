@@ -24,7 +24,7 @@ export class CartService {
 
   addToCart(book: BookDTO) {
     const currentItems = this.cartItems.value;
-    const existingItem = currentItems.find(item => item.book.id === book.id);
+    const existingItem = currentItems.find((item) => item.book.id === book.id);
 
     if (existingItem) {
       existingItem.quantity += 1;
@@ -38,14 +38,14 @@ export class CartService {
 
   removeFromCart(bookId: string) {
     const currentItems = this.cartItems.value;
-    const updatedItems = currentItems.filter(item => item.book.id !== bookId);
+    const updatedItems = currentItems.filter((item) => item.book.id !== bookId);
     this.cartItems.next(updatedItems);
     this.saveCart();
   }
 
   updateQuantity(bookId: string, quantity: number) {
     const currentItems = this.cartItems.value;
-    const item = currentItems.find(item => item.book.id === bookId);
+    const item = currentItems.find((item) => item.book.id === bookId);
     if (item) {
       item.quantity = quantity;
       this.cartItems.next([...currentItems]);

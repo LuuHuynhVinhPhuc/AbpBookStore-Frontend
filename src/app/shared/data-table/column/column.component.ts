@@ -14,7 +14,7 @@ export class ColumnComponent {
   @Input() value: string;
   @Input() activeLink: string;
   @Input() columnType: string = 'text';
-  @Input() dateFormat: string = 'dd/MM/yyyy HH:mm a';
+  @Input() dateFormat: string = 'dd/MM/yyyy';
   @Input() typeControl: string;
 
   @Input() defaultValue: any;

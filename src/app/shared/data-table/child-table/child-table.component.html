@@ -1,6 +1,10 @@
 <div class="table-responsive">
   <div class="d-flex align-items-center collapse-container" (click)="toggleTable()">
-    <i class="fa" [ngClass]="isExpanded ? 'fa-chevron-up' : 'fa-chevron-down'" aria-hidden="true"></i>
+    <i
+      class="fa"
+      [ngClass]="isExpanded ? 'fa-chevron-up' : 'fa-chevron-down'"
+      aria-hidden="true"
+    ></i>
     <h4 class="title-table">Customer</h4>
   </div>
   <table class="table table-bordered table-striped table-actions" *ngIf="isExpanded">

@@ -1,33 +1,37 @@
 import { ListService, PagedResultDto } from '@abp/ng.core';
 import { Confirmation, ConfirmationService } from '@abp/ng.theme.shared';
 import { inject, Injectable } from '@angular/core';
-import { BookService } from '@proxy/marcus/book-store/books';
-import { BookDTO, BookPagedAndSortedResultRequestDto } from '@proxy/marcus/book-store/books/dtos';
+import { AuthorService } from '@proxy/marcus/book-store/authors';
+import {
+  AuthorDTO,
+  AuthorPagedAndSortedResultRequestDto,
+  CreateAndUpdateAuthors,
+} from '@proxy/marcus/book-store/authors/dtos';
 import { filter, switchMap } from 'rxjs';
 
 @Injectable()
-export class BookManagementService {
-  private readonly bookService = inject(BookService);
+export class AuthorManagementService {
+  private readonly authorService = inject(AuthorService);
   protected readonly confirmationService = inject(ConfirmationService);
   public list = inject(ListService);
-  data: PagedResultDto<BookDTO> = {
+
+  data: PagedResultDto<AuthorDTO> = {
     items: [],
     totalCount: 0,
   };
+
   filter = {
     pageNumber: 1,
     maxResultCount: 5,
-    sorting: 'CreationTime desc',
-  } as BookPagedAndSortedResultRequestDto;
-
-  constructor() {}
+    sorting: 'name desc',
+  } as AuthorPagedAndSortedResultRequestDto;
 
   hookToQuery() {
     const getData = () => {
       const page = this.list.page ?? 1;
       const pageNumber = page < 1 ? 1 : page;
 
-      return this.bookService.getList({
+      return this.authorService.getList({
         pageNumber: pageNumber,
         maxResultCount: this.filter.maxResultCount ?? 5,
         sorting: this.filter.sorting ?? 'CreationTime desc',
@@ -35,23 +39,32 @@ export class BookManagementService {
       });
     };
 
-    const setData = (list: PagedResultDto<BookDTO>) => {
+    const setData = (list: PagedResultDto<AuthorDTO>) => {
       this.data = list;
     };
 
     this.list.hookToQuery(getData).subscribe(setData);
   }
 
-  delete(a: BookDTO) {
-    this.confirmationService
+  delete(author: AuthorDTO) {
+    return this.confirmationService
       .warn('::DeleteConfirmationMessage', '::AreYouSure', { messageLocalizationParams: [] })
       .pipe(
         filter((status) => status === Confirmation.Status.confirm),
-        switchMap(() => this.bookService.delete(a.id))
-      )
-      .subscribe((res) => {
-        this.hookToQuery();
-      });
+        switchMap(() => this.authorService.delete(author.id!))
+      );
+  }
+
+  create(input: CreateAndUpdateAuthors) {
+    return this.authorService.create(input);
+  }
+
+  update(id: string, input: CreateAndUpdateAuthors) {
+    return this.authorService.update(id, input);
+  }
+
+  get(id: string) {
+    return this.authorService.get(id);
   }
 
   public changePage(page: number) {

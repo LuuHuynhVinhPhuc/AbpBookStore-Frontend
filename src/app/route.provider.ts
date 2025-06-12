@@ -28,6 +28,7 @@ function configureRoutes(routesService: RoutesService) {
         iconClass: 'fas fa-book-open',
         order: 1,
         layout: eLayoutType.application,
+        requiredPolicy: 'BookStore.Books',
       },
       {
         path: 'author-management',
@@ -35,6 +36,7 @@ function configureRoutes(routesService: RoutesService) {
         iconClass: 'fas fa-pen-nib',
         order: 1,
         layout: eLayoutType.application,
+        requiredPolicy: 'BookStore.Authors',
       },
     ]);
   };

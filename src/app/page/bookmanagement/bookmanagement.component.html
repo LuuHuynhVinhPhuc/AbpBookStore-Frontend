@@ -8,9 +8,13 @@
   <app-data-table
     [itemRemove]="true"
     [itemEdit]="true"
+    [isActivePaging]="true"
+    [totalCount]="bookService.data.totalCount"
     [records]="bookService.data.items"
     (removeItemHandler)="bookService.delete($event.entry)"
     (editItemHandler)="editBook($event.entry)"
+    [pageSize]="bookService.list.maxResultCount"
+    (changedPaging)="bookService.changePage($event)"
   >
     <app-header name="action"></app-header>
     <app-header title="Book Name" name="name"></app-header>
@@ -23,7 +27,7 @@
     <app-column value="name"></app-column>
     <app-column value="type" [formatter]="getBookTypeText"></app-column>
     <app-column value="price"></app-column>
-    <app-column value="publishDate" columnType="date" dateFormat="dd/MM/yyyy"></app-column>
+    <app-column value="publishDate" columnType="date"></app-column>
     <app-column value="authors" [formatter]="getAuthorNames"></app-column>
   </app-data-table>
 </div>

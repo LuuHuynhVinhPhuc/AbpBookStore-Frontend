@@ -9,7 +9,7 @@
 }
 
 .cart-thumb {
-  box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
   border-radius: 8px;
 }
 
@@ -17,13 +17,15 @@
   --bs-table-bg: transparent;
 }
 
-.table th, .table td {
+.table th,
+.table td {
   vertical-align: middle;
   padding-top: 0.6rem;
   padding-bottom: 0.6rem;
 }
 
-.btn-sm, .form-control-sm {
+.btn-sm,
+.form-control-sm {
   font-size: 0.95rem;
   padding: 0.25rem 0.5rem;
 }
@@ -42,12 +44,14 @@ input[readonly] {
   border-color: #3d5afe;
 }
 
-.btn-primary:active, .btn-primary:focus {
+.btn-primary:active,
+.btn-primary:focus {
   background: #304ffe;
   border-color: #304ffe;
 }
 
-.btn-outline-secondary:active, .btn-outline-secondary:focus {
+.btn-outline-secondary:active,
+.btn-outline-secondary:focus {
   border-color: #3d5afe;
 }
 

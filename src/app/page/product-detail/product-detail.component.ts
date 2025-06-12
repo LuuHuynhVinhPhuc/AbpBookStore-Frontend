@@ -43,7 +43,7 @@ export class ProductDetailComponent implements OnInit {
 
   // get book by id
   getBook() {
-    this.productService.get(this.bookID).subscribe(res => {
+    this.productService.get(this.bookID).subscribe((res) => {
       this.data = res;
     });
   }
