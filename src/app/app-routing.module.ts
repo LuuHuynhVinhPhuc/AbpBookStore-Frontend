@@ -40,6 +40,13 @@ const routes: Routes = [
             m => m.BookmanagementComponent
           ),
       },
+      {
+        path: 'author-management',
+        loadComponent: () =>
+          import('./page/authormanagement/authormanagement.component').then(
+            m => m.AuthormanagementComponent
+          ),
+      },
     ],
   },
   {

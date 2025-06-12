@@ -29,6 +29,13 @@ function configureRoutes(routesService: RoutesService) {
         order: 1,
         layout: eLayoutType.application,
       },
+      {
+        path: 'author-management',
+        name: 'Author management',
+        iconClass: 'fas fa-pen-nib',
+        order: 1,
+        layout: eLayoutType.application,
+      },
     ]);
   };
 }

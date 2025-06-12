@@ -1,0 +1,66 @@
+<div class="col-12 col-sm-12 col-md-12 m-0 mt-4">
+  <div class="d-flex justify-content-end mb-3">
+    <button class="btn btn-primary" (click)="openAddAuthorModal()">
+      <i class="fas fa-plus me-1"></i> Add New Author
+    </button>
+  </div>
+
+  <app-data-table
+    [itemRemove]="true"
+    [itemEdit]="true"
+    [records]="data.items"
+    (removeItemHandler)="deleteAuthor($event.entry)"
+    (editItemHandler)="editAuthor($event.entry)"
+  >
+    <app-header name="action"></app-header>
+    <app-header title="Name" name="name"></app-header>
+    <app-header title="Birthdate" name="birthdate"></app-header>
+    <app-header title="Short Bio" name="shortBio"></app-header>
+
+    <app-column type="action"></app-column>
+    <app-column value="name"></app-column>
+    <app-column value="birthdate" columnType="date" [formatter]="formatDate"></app-column>
+    <app-column value="shortBio"></app-column>
+  </app-data-table>
+</div>
+
+<!-- Add Author Modal -->
+<ng-template #addAuthorModal let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title">{{ editingAuthorId ? 'Edit Author' : 'Add New Author' }}</h4>
+    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss()"></button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="authorForm">
+      <div class="mb-3">
+        <label for="name" class="form-label">Author Name</label>
+        <input type="text" class="form-control" id="name" formControlName="name" required />
+      </div>
+      <div class="mb-3">
+        <label for="birthDate" class="form-label">Birthdate</label>
+        <input
+          type="date"
+          class="form-control"
+          id="birthDate"
+          formControlName="birthDate"
+          required
+        />
+      </div>
+      <div class="mb-3">
+        <label for="shortBio" class="form-label">Short Bio</label>
+        <textarea class="form-control" id="shortBio" formControlName="shortBio" rows="3"></textarea>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="modal.dismiss()">Cancel</button>
+    <button
+      type="button"
+      class="btn btn-primary"
+      (click)="saveAuthor(modal)"
+      [disabled]="!authorForm.valid"
+    >
+      Save
+    </button>
+  </div>
+</ng-template>
