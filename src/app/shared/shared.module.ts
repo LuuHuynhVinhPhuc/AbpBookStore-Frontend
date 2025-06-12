@@ -5,11 +5,12 @@ import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgxValidateCoreModule } from '@ngx-validate/core';
+import { CurrencyFormatDirective } from './directives/currency-format.directive';
 import { FooterComponent } from './footer/footer.component';
 import { HeaderComponent } from './header/header.component';
 
 @NgModule({
-  declarations: [HeaderComponent, FooterComponent],
+  declarations: [],
   imports: [
     CommonModule,
     CoreModule,
@@ -17,6 +18,9 @@ import { HeaderComponent } from './header/header.component';
     NgbDropdownModule,
     NgxValidateCoreModule,
     RouterModule,
+    HeaderComponent,
+    FooterComponent,
+    CurrencyFormatDirective,
   ],
   exports: [
     CommonModule,
@@ -27,6 +31,7 @@ import { HeaderComponent } from './header/header.component';
     HeaderComponent,
     FooterComponent,
     RouterModule,
+    CurrencyFormatDirective,
   ],
   providers: [],
 })

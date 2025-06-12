@@ -24,6 +24,7 @@ import { BookDTO, UpdateBookDTO } from '@proxy/marcus/book-store/books/dtos';
 import { ColumnComponent } from 'src/app/shared/data-table/column/column.component';
 import { DataTableComponent } from 'src/app/shared/data-table/data-table.component';
 import { HeaderTableComponent } from 'src/app/shared/data-table/header/header.component';
+import { NumberFormatDirective } from 'src/app/shared/directives/number-format.directive';
 import { BookManagementService } from './services/bookmanagement.service';
 
 @Component({
@@ -36,6 +37,7 @@ import { BookManagementService } from './services/bookmanagement.service';
     FormsModule,
     ReactiveFormsModule,
     NgSelectModule,
+    NumberFormatDirective,
   ],
   providers: [BookManagementService, ListService, PageComponent],
   templateUrl: './bookmanagement.component.html',
