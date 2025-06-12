@@ -7,6 +7,7 @@ import {
   NgModel,
   ReactiveFormsModule,
 } from '@angular/forms';
+import { FormatterPercentPipe } from '../../pipes/formatterPercent.pipe';
 export abstract class ValueAccessorBase<T> implements ControlValueAccessor {
   private innerValue: T;
 
@@ -49,7 +50,7 @@ export abstract class ValueAccessorBase<T> implements ControlValueAccessor {
     },
   ],
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, FormatterPercentPipe],
 })
 export class AppTextboxCellComponent extends ValueAccessorBase<any> {
   @ViewChild(NgModel) model: NgModel;

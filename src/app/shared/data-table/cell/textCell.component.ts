@@ -2,13 +2,15 @@ import { CoreModule } from '@abp/ng.core';
 import { ThemeSharedModule } from '@abp/ng.theme.shared';
 import { Component, ElementRef, Input, OnInit, Renderer2 } from '@angular/core';
 import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
+import { DateComponentPipe } from '../../pipes/date-component.pipe';
+import { NumberFormatPipe } from '../../pipes/number-format.pipe';
 
 @Component({
   selector: 'app-text-cell',
   templateUrl: 'textCell.component.html',
   styleUrls: ['./dataCell.component.scss'],
   standalone: true,
-  imports: [NgbTooltipModule, CoreModule, ThemeSharedModule],
+  imports: [NumberFormatPipe, DateComponentPipe, NgbTooltipModule, CoreModule, ThemeSharedModule],
 })
 export class TextCellComponent implements OnInit {
   @Input() cssClass: string;

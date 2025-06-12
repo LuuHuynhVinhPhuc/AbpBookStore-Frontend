@@ -23,7 +23,7 @@
     <app-column value="name"></app-column>
     <app-column value="type" [formatter]="getBookTypeText"></app-column>
     <app-column value="price"></app-column>
-    <app-column value="publishDate" columnType="date" [formatter]="formatDate"></app-column>
+    <app-column value="publishDate" columnType="date" dateFormat="dd/MM/yyyy"></app-column>
     <app-column value="authors" [formatter]="getAuthorNames"></app-column>
   </app-data-table>
 </div>

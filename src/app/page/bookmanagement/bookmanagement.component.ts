@@ -225,14 +225,4 @@ export class BookmanagementComponent implements OnInit {
   getAuthorNames(authors: AuthorDTO[]): string {
     return authors && authors.length > 0 ? authors.map(a => a.name).join(', ') : 'Unknown';
   }
-
-  formatDate(value: any): string {
-    if (!value) return '';
-    const date = new Date(value);
-    return date.toLocaleDateString('en-GB', {
-      day: '2-digit',
-      month: '2-digit',
-      year: 'numeric',
-    });
-  }
 }
