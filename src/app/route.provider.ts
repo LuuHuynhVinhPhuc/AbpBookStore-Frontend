@@ -22,6 +22,13 @@ function configureRoutes(routesService: RoutesService) {
         order: 1,
         layout: eLayoutType.application,
       },
+      {
+        path: 'book-management',
+        name: 'Book Management',
+        iconClass: 'fas fa-book-open',
+        order: 1,
+        layout: eLayoutType.application,
+      },
     ]);
   };
 }

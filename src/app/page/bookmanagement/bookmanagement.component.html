@@ -10,18 +10,21 @@
     [itemEdit]="true"
     [records]="bookService.data.items"
     (removeItemHandler)="bookService.delete($event.entry)"
+    (editItemHandler)="editBook($event.entry)"
   >
     <app-header name="action"></app-header>
     <app-header title="Book Name" name="name"></app-header>
     <app-header title="Type" name="type"></app-header>
     <app-header title="Price" name="price"></app-header>
     <app-header title="Publish Date" name="publishDate"></app-header>
+    <app-header title="Authors" name="authors"></app-header>
 
     <app-column type="action"></app-column>
     <app-column value="name"></app-column>
     <app-column value="type" [formatter]="getBookTypeText"></app-column>
     <app-column value="price"></app-column>
     <app-column value="publishDate" columnType="date" [formatter]="formatDate"></app-column>
+    <app-column value="authors" [formatter]="getAuthorNames"></app-column>
   </app-data-table>
 </div>
 
@@ -32,28 +35,22 @@
     <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss()"></button>
   </div>
   <div class="modal-body">
-    <form #bookForm="ngForm">
+    <form [formGroup]="bookForm">
       <div class="mb-3">
         <label for="name" class="form-label">Book Name</label>
-        <input
-          type="text"
-          class="form-control"
-          id="name"
-          name="name"
-          [(ngModel)]="newBook.name"
-          required
-        />
+        <input type="text" class="form-control" id="name" formControlName="name" required />
       </div>
       <div class="mb-3">
         <label for="type" class="form-label">Book Type</label>
         <ng-select
           id="type"
           name="type"
-          [(ngModel)]="newBook.type"
+          formControlName="type"
           [items]="bookTypes"
           bindLabel="label"
           bindValue="value"
           placeholder="Select a book type"
+          [clearable]="false"
           required
         ></ng-select>
       </div>
@@ -63,21 +60,37 @@
           type="number"
           class="form-control"
           id="price"
-          name="price"
-          [(ngModel)]="newBook.price"
+          formControlName="price"
           required
           min="0"
         />
       </div>
       <div class="mb-3">
         <label for="publishDate" class="form-label">Publish Date</label>
-        <input
-          type="date"
-          class="form-control"
-          id="publishDate"
-          name="publishDate"
-          [(ngModel)]="newBook.publishDate"
-        />
+        <input type="date" class="form-control" id="publishDate" formControlName="publishDate" />
+        <div
+          *ngIf="
+            bookForm.get('publishDate')?.hasError('notToday') &&
+            bookForm.get('publishDate')?.touched
+          "
+          class="text-danger mt-1"
+        >
+          Publish date cannot be today. Please select a different date.
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="authorIds" class="form-label">Authors</label>
+        <ng-select
+          id="authorIds"
+          name="authorIds"
+          formControlName="authorIds"
+          [items]="authors"
+          bindLabel="name"
+          bindValue="id"
+          [multiple]="true"
+          [closeOnSelect]="false"
+          placeholder="Select authors"
+        ></ng-select>
       </div>
     </form>
   </div>
@@ -87,7 +100,7 @@
       type="button"
       class="btn btn-primary"
       (click)="saveBook(modal)"
-      [disabled]="!bookForm.form.valid"
+      [disabled]="!bookForm.valid"
     >
       Save
     </button>
