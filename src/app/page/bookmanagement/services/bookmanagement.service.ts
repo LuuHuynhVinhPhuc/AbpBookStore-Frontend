@@ -14,19 +14,17 @@ export class BookManagementService {
     items: [],
     totalCount: 0,
   };
-  filters = { sorting: 'CreationTime asc' } as BookPagedAndSortedResultRequestDto;
+  filter = { sorting: 'CreationTime desc' } as BookPagedAndSortedResultRequestDto;
 
-  hookToQuery() {
+  hooktoQuery() {
     const getData = (query: ABP.PageQueryParams) =>
       this.bookService.getList({
         ...query,
-        ...this.filters,
+        ...this.filter,
       });
-
     const setData = (list: PagedResultDto<BookDTO>) => {
       this.data = list;
     };
-
     this.list.hookToQuery(getData).subscribe(setData);
   }
 
@@ -38,7 +36,7 @@ export class BookManagementService {
         switchMap(() => this.bookService.delete(a.id))
       )
       .subscribe(res => {
-        this.hookToQuery();
+        this.hooktoQuery();
       });
   }
 }

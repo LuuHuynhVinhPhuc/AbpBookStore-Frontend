@@ -43,7 +43,7 @@
       <a routerLink="/dashboard" class="btn btn-link btn-sm">See all</a>
     </div>
     <div class="row g-3">
-      <div class="col-6 col-md-3" *ngFor="let book of data.items">
+      <div class="col-6 col-md-3" *ngFor="let book of dashboardService.data.items">
         <div class="card h-100 border-0 shadow-sm book-card">
           <img
             src="assets/images/default-book.jpg"
@@ -62,7 +62,7 @@
               <ng-template #noAuthor>Unknown</ng-template>
             </div>
             <div class="d-flex justify-content-between align-items-center">
-              <span class="fw-bold text-primary">${{ book.price }}</span>
+              <span class="fw-bold text-primary">{{ book.price }} VNĐ</span>
               <a
                 [routerLink]="['/product', book.id]"
                 class="btn btn-outline-primary btn-sm rounded-pill"
