@@ -33,6 +33,13 @@ const routes: Routes = [
         loadComponent: () =>
           import('./page/checkout/checkout.component').then(m => m.CheckoutComponent),
       },
+      {
+        path: 'book-management',
+        loadComponent: () =>
+          import('./page/bookmanagement/bookmanagement.component').then(
+            m => m.BookmanagementComponent
+          ),
+      },
     ],
   },
   {

@@ -1,0 +1,121 @@
+<div *ngIf="shouldShowPagination('top')" [ngClass]="getPaginationClass('top')">
+  <ngb-pagination
+    [maxSize]="5"
+    [rotate]="true"
+    [boundaryLinks]="true"
+    [pageSize]="pageSize"
+    [collectionSize]="totalCount"
+    (pageChange)="onChangePage($event)">
+  </ngb-pagination>
+</div>
+<div class="table-responsive">
+  <table class="table table-bordered table-striped table-actions">
+    <thead>
+      <tr>
+        <th *ngIf="showCheckbox" [class.fixed]="fixColumn === 'first'" class="width-50"></th>
+        <th *ngIf="actions && actions.length" [class.fixed]="fixColumn === 'first'" class="text-center">Actions</th>
+        <ng-template ngFor let-header let-i="index" [ngForOf]="headers">
+          <th
+            [class.fixed]="(fixColumn === 'first' && i === 0) || (fixColumn === 'last' && i === headers.length - 1)"
+            class="{{ header.className }}">
+            <span [innerHTML]="header.title"></span>
+            <ng-container *ngIf="header?.hasTooltip">
+              <i
+                class="fa fa-info-circle ml-1"
+                [ngStyle]="{ color: '#966Ce9' }"
+                ngbTooltip="{{ header?.tooltip }}"
+                [placement]="'right'">
+              </i>
+            </ng-container>
+          </th>
+        </ng-template>
+      </tr>
+    </thead>
+    <tbody *ngIf="records?.length > 0">
+      <ng-container *ngTemplateOutlet="tbody"></ng-container>
+    </tbody>
+    <tbody *ngIf="records?.length === 0">
+      <tr>
+        <td [attr.colspan]="getColumnCount()">No data found.</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<div *ngIf="shouldShowPagination('bottom')" [ngClass]="getPaginationClass('bottom')">
+  <ngb-pagination
+    [maxSize]="5"
+    [rotate]="true"
+    [boundaryLinks]="true"
+    [pageSize]="pageSize"
+    [collectionSize]="totalCount"
+    (pageChange)="onChangePage($event)">
+  </ngb-pagination>
+</div>
+
+<ng-template #tbody>
+  <ng-template ngFor let-row let-i="index" [ngForOf]="records">
+    <tr
+      [id]="i"
+      [ngClass]="{ focused: row?.isFocused, 'table-row-clickable': hasClickRow }"
+      (click)="hasClickRow ? onClickedRow(row, $event) : null">
+      <td class="check" [class.fixed]="fixColumn === 'first'" *ngIf="showCheckbox">
+        <input
+          type="checkbox"
+          [(ngModel)]="row.checked"
+          value="{{ row.entityId }}"
+          (change)="checkboxSelectChange(row); $event.stopPropagation()" />
+      </td>
+      <td class="checkbox-icon-column" [class.fixed]="fixColumn === 'first'" *ngIf="showCheckboxIcon">
+        <i class="fas fa-check-square" *ngIf="row?.isFocused"></i>
+        <i class="fa fa-square-o" *ngIf="!row?.isFocused"></i>
+      </td>
+      <ng-template ngFor let-column let-j="index" [ngForOf]="columns">
+        <td
+          [ngSwitch]="column.type"
+          [class.fixed]="(fixColumn === 'first' && j === 0) || (fixColumn === 'last' && j === columns.length - 1)"
+          class="{{ column.columnCssClass }}">
+          <app-action-cell
+            *ngSwitchCase="'action'"
+            [edit]="itemEdit"
+            [remove]="itemRemove"
+            [readOnly]="checkReadOnly(row)"
+            (removeAction)="removeActionHandler(row, column)"
+            (editAction)="editActionHandler(row, column)">
+          </app-action-cell>
+          <app-click-cell
+            *ngSwitchCase="'clickCell'"
+            [formatter]="column.formatter"
+            [value]="getValue(row, column.value)"
+            [entry]="row"
+            [isActive]="true"
+            (clickAction)="clickCellActionHandler(row, column)"
+            [cssClass]="getValue(row, column.cssClass)">
+          </app-click-cell>
+          <app-textbox-cell
+            *ngSwitchCase="'textbox'"
+            [(ngModel)]="row[column.value]"
+            [name]="column.value"
+            [disabled]="disabledInputCell"
+            [entry]="row"
+            [typeControl]="column?.typeControl"
+            (ngModelChange)="handleCellValueChanges()">
+          </app-textbox-cell>
+          <app-text-cell
+            *ngSwitchDefault
+            [formatter]="column.formatter"
+            [value]="getValue(row, column.value)"
+            [entry]="row"
+            [columnType]="column.columnType"
+            [dateFormat]="column.dateFormat"
+            [cssClass]="getValue(row, column.cssClass)">
+          </app-text-cell>
+        </td>
+      </ng-template>
+    </tr>
+    <tr *ngIf="row[fieldChild] && row[fieldChild].length > 0">
+      <td [attr.colspan]="getColumnCount()" style="background-color: #dee2e6">
+        <app-child-table [headers]="childHeaders" [records]="row[fieldChild]" [columns]="childColumns" />
+      </td>
+    </tr>
+  </ng-template>
+</ng-template>

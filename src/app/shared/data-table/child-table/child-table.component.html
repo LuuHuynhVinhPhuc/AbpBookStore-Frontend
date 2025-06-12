@@ -1,0 +1,24 @@
+<div class="table-responsive">
+  <div class="d-flex align-items-center collapse-container" (click)="toggleTable()">
+    <i class="fa" [ngClass]="isExpanded ? 'fa-chevron-up' : 'fa-chevron-down'" aria-hidden="true"></i>
+    <h4 class="title-table">Customer</h4>
+  </div>
+  <table class="table table-bordered table-striped table-actions" *ngIf="isExpanded">
+    <tbody *ngIf="records?.length > 0">
+      <tr>
+        <ng-template ngFor let-header [ngForOf]="headers">
+          <td class="header {{ header.className }}">
+            <span>{{ header.key }}</span>
+          </td>
+        </ng-template>
+      </tr>
+      <ng-template ngFor let-row let-i="index" [ngForOf]="records">
+        <tr>
+          <td *ngFor="let column of columns" class="{{ column.className }}">
+            <span [innerHTML]="row[column.key]"></span>
+          </td>
+        </tr>
+      </ng-template>
+    </tbody>
+  </table>
+</div>

@@ -1,0 +1,95 @@
+<div class="col-12 col-sm-12 col-md-12 m-0 mt-3">
+  <div class="d-flex justify-content-end mb-3">
+    <button class="btn btn-primary" (click)="openAddBookModal()">
+      <i class="fas fa-plus me-1"></i> Add New Book
+    </button>
+  </div>
+
+  <app-data-table
+    [itemRemove]="true"
+    [itemEdit]="true"
+    [records]="bookService.data.items"
+    (removeItemHandler)="bookService.delete($event.entry)"
+  >
+    <app-header name="action"></app-header>
+    <app-header title="Book Name" name="name"></app-header>
+    <app-header title="Type" name="type"></app-header>
+    <app-header title="Price" name="price"></app-header>
+    <app-header title="Publish Date" name="publishDate"></app-header>
+
+    <app-column type="action"></app-column>
+    <app-column value="name"></app-column>
+    <app-column value="type" [formatter]="getBookTypeText"></app-column>
+    <app-column value="price"></app-column>
+    <app-column value="publishDate" columnType="date" [formatter]="formatDate"></app-column>
+  </app-data-table>
+</div>
+
+<!-- Add Book Modal -->
+<ng-template #addBookModal let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title">Add New Book</h4>
+    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss()"></button>
+  </div>
+  <div class="modal-body">
+    <form #bookForm="ngForm">
+      <div class="mb-3">
+        <label for="name" class="form-label">Book Name</label>
+        <input
+          type="text"
+          class="form-control"
+          id="name"
+          name="name"
+          [(ngModel)]="newBook.name"
+          required
+        />
+      </div>
+      <div class="mb-3">
+        <label for="type" class="form-label">Book Type</label>
+        <ng-select
+          id="type"
+          name="type"
+          [(ngModel)]="newBook.type"
+          [items]="bookTypes"
+          bindLabel="label"
+          bindValue="value"
+          placeholder="Select a book type"
+          required
+        ></ng-select>
+      </div>
+      <div class="mb-3">
+        <label for="price" class="form-label">Price</label>
+        <input
+          type="number"
+          class="form-control"
+          id="price"
+          name="price"
+          [(ngModel)]="newBook.price"
+          required
+          min="0"
+        />
+      </div>
+      <div class="mb-3">
+        <label for="publishDate" class="form-label">Publish Date</label>
+        <input
+          type="date"
+          class="form-control"
+          id="publishDate"
+          name="publishDate"
+          [(ngModel)]="newBook.publishDate"
+        />
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="modal.dismiss()">Cancel</button>
+    <button
+      type="button"
+      class="btn btn-primary"
+      (click)="saveBook(modal)"
+      [disabled]="!bookForm.form.valid"
+    >
+      Save
+    </button>
+  </div>
+</ng-template>
