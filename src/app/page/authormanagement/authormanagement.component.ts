@@ -1,5 +1,6 @@
 import { ListService } from '@abp/ng.core';
 import { ToasterService } from '@abp/ng.theme.shared';
+import { CommonModule } from '@angular/common';
 import { Component, inject, OnInit, ViewChild } from '@angular/core';
 import {
   FormBuilder,
@@ -10,21 +11,13 @@ import {
 } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AuthorDTO } from '@proxy/marcus/book-store/authors/dtos';
-import { ColumnComponent } from 'src/app/shared/data-table/column/column.component';
-import { DataTableComponent } from 'src/app/shared/data-table/data-table.component';
-import { HeaderTableComponent } from 'src/app/shared/data-table/header/header.component';
+import { NgxDatatableModule, SelectionType, SortType } from '@swimlane/ngx-datatable';
 import { AuthorManagementService } from './services/authormanement.service';
 
 @Component({
   selector: 'app-authormanagement',
   standalone: true,
-  imports: [
-    DataTableComponent,
-    HeaderTableComponent,
-    ColumnComponent,
-    FormsModule,
-    ReactiveFormsModule,
-  ],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, NgxDatatableModule],
   providers: [ListService, AuthorManagementService],
   templateUrl: './authormanagement.component.html',
   styleUrl: './authormanagement.component.scss',
@@ -40,14 +33,17 @@ export class AuthormanagementComponent implements OnInit {
 
   @ViewChild('addAuthorModal') addAuthorModal: any;
 
+  SelectionType = SelectionType;
+  SortType = SortType;
+
   ngOnInit(): void {
     this.authorService.hookToQuery();
     this.initAuthorForm();
   }
 
-  onChangePage(page: number) {
-    this.authorService.list.page = page;
-    this.authorService.list.get();
+  onChangePage(event: any) {
+    this.authorService.list.page = event.offset;
+    this.authorService.hookToQuery();
   }
 
   initAuthorForm() {

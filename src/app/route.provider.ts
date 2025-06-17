@@ -38,6 +38,14 @@ function configureRoutes(routesService: RoutesService) {
         layout: eLayoutType.application,
         requiredPolicy: 'BookStore.Authors',
       },
+      {
+        path: 'order-management',
+        name: 'Order management',
+        iconClass: 'fas fa-list-alt',
+        order: 1,
+        layout: eLayoutType.application,
+        requiredPolicy: 'BookStore.Orders',
+      },
     ]);
   };
 }

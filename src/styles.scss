@@ -1,5 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 @import '@ng-select/ng-select/themes/material.theme.css';
+@import '../node_modules/@swimlane/ngx-datatable/themes/bootstrap.scss';
+@import '../node_modules/@swimlane/ngx-datatable/assets/icons.css';
 
 @keyframes donut-spin {
   0% {
@@ -57,3 +59,4 @@
 .lpx-topbar-container .lpx-topbar {
   display: none;
 }
+

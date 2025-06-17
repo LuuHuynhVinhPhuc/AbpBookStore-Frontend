@@ -1,24 +1,35 @@
+import { AuthService } from '@abp/ng.core';
+import { ConfirmationService } from '@abp/ng.theme.shared';
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, inject } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { RouterModule } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { Router, RouterModule } from '@angular/router';
 import { CartItem, CartService } from './services/cart.service';
 
 @Component({
   selector: 'app-card',
   standalone: true,
-  imports: [CommonModule, RouterModule, FormsModule],
+  imports: [CommonModule, RouterModule],
   templateUrl: './card.component.html',
   styleUrl: './card.component.scss',
 })
 export class CardComponent implements OnInit {
-  private cartService = inject(CartService);
   cartItems: CartItem[] = [];
+
+  constructor(
+    private cartService: CartService,
+    private authService: AuthService,
+    private router: Router,
+    private confirmationService: ConfirmationService
+  ) {}
 
   ngOnInit() {
     this.cartService.cartItems$.subscribe((items) => {
       this.cartItems = items;
     });
+  }
+
+  toggleItemSelection(bookId: string) {
+    this.cartService.toggleItemSelection(bookId);
   }
 
   updateQuantity(item: CartItem, change: number) {
@@ -32,15 +43,35 @@ export class CardComponent implements OnInit {
     this.cartService.removeFromCart(item.book.id);
   }
 
-  get subtotal(): number {
-    return this.cartService.getTotalPrice();
+  get selectedItemsCount(): number {
+    return this.cartItems.filter((item) => item.selected).length;
+  }
+
+  get selectedSubtotal(): number {
+    return this.cartService.getSelectedTotalPrice();
   }
 
   get shipping(): number {
-    return this.subtotal > 50 ? 0 : 5.99;
+    return this.selectedSubtotal > 500000 ? 0 : 30000; // Free shipping for orders over 500,000 VND
   }
 
-  get total(): number {
-    return this.subtotal + this.shipping;
+  get selectedTotal(): number {
+    return this.selectedSubtotal + this.shipping;
+  }
+
+  checkLogin() {
+    if (!this.authService.isAuthenticated) {
+      this.confirmationService
+        .warn('::You need to login to continue', '::Do you want to login now?')
+        .subscribe((status) => {
+          if (status === 'confirm') {
+            const returnUrl = encodeURIComponent('/checkout');
+            window.location.href = `https://localhost:44332/Account/Login?returnUrl=${returnUrl}`;
+          }
+        });
+      return false;
+    }
+    this.router.navigate(['/checkout']);
+    return true;
   }
 }

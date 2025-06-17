@@ -15,8 +15,10 @@ import {
   withValidationBluePrint,
 } from '@abp/ng.theme.shared';
 import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { environment } from '../environments/environment';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -30,11 +32,14 @@ import { APP_ROUTE_PROVIDER } from './route.provider';
     ThemeLeptonXModule.forRoot(),
     SideMenuLayoutModule.forRoot(),
     AccountLayoutModule.forRoot(),
-    ThemeSharedModule,
+    ThemeSharedModule.forRoot(),
+    NgxDatatableModule,
+    FormsModule,
   ],
   declarations: [AppComponent],
   providers: [
     APP_ROUTE_PROVIDER,
+    NgxDatatableModule,
     provideAbpCore(
       withOptions({
         environment,

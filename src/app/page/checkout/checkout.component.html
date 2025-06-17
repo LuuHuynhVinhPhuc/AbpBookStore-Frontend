@@ -2,37 +2,99 @@
   <div class="row justify-content-center">
     <div class="col-lg-7">
       <h4 class="fw-bold mb-3">Checkout</h4>
-      <form *ngIf="!orderConfirmed" (ngSubmit)="confirmOrder()" autocomplete="off">
+      <form
+        *ngIf="!orderConfirmed"
+        [formGroup]="checkoutForm"
+        (ngSubmit)="confirmOrder()"
+        autocomplete="off"
+      >
         <!-- Thông tin giao hàng -->
         <div class="card mb-3 border-0 shadow-sm rounded-4">
           <div class="card-body">
             <h6 class="fw-semibold mb-3">Shipping Information</h6>
             <div class="mb-2">
               <label class="form-label">Full Name</label>
-              <input class="form-control" [(ngModel)]="shippingInfo.name" name="name" required />
+              <input
+                class="form-control"
+                formControlName="fullName"
+                [ngClass]="{
+                  'is-invalid':
+                    formControls['fullName'].touched && formControls['fullName'].invalid,
+                }"
+              />
+              <div
+                class="invalid-feedback"
+                *ngIf="formControls['fullName'].touched && formControls['fullName'].invalid"
+              >
+                <span *ngIf="formControls['fullName'].errors?.['required']"
+                  >Full name is required</span
+                >
+                <span *ngIf="formControls['fullName'].errors?.['minlength']"
+                  >Full name must be at least 2 characters</span
+                >
+              </div>
             </div>
             <div class="mb-2">
               <label class="form-label">Address</label>
               <input
                 class="form-control"
-                [(ngModel)]="shippingInfo.address"
-                name="address"
-                required
+                formControlName="address"
+                [ngClass]="{
+                  'is-invalid': formControls['address'].touched && formControls['address'].invalid,
+                }"
               />
+              <div
+                class="invalid-feedback"
+                *ngIf="formControls['address'].touched && formControls['address'].invalid"
+              >
+                <span *ngIf="formControls['address'].errors?.['required']"
+                  >Address is required</span
+                >
+                <span *ngIf="formControls['address'].errors?.['minlength']"
+                  >Address must be at least 5 characters</span
+                >
+              </div>
             </div>
             <div class="mb-2">
               <label class="form-label">Phone</label>
-              <input class="form-control" [(ngModel)]="shippingInfo.phone" name="phone" required />
+              <input
+                class="form-control"
+                formControlName="phone"
+                [ngClass]="{
+                  'is-invalid': formControls['phone'].touched && formControls['phone'].invalid,
+                }"
+              />
+              <div
+                class="invalid-feedback"
+                *ngIf="formControls['phone'].touched && formControls['phone'].invalid"
+              >
+                <span *ngIf="formControls['phone'].errors?.['required']"
+                  >Phone number is required</span
+                >
+                <span *ngIf="formControls['phone'].errors?.['pattern']"
+                  >Please enter a valid phone number (10-11 digits)</span
+                >
+              </div>
             </div>
             <div class="mb-2">
               <label class="form-label">Email</label>
               <input
                 class="form-control"
-                [(ngModel)]="shippingInfo.email"
-                name="email"
+                formControlName="email"
                 type="email"
-                required
+                [ngClass]="{
+                  'is-invalid': formControls['email'].touched && formControls['email'].invalid,
+                }"
               />
+              <div
+                class="invalid-feedback"
+                *ngIf="formControls['email'].touched && formControls['email'].invalid"
+              >
+                <span *ngIf="formControls['email'].errors?.['required']">Email is required</span>
+                <span *ngIf="formControls['email'].errors?.['email']"
+                  >Please enter a valid email address</span
+                >
+              </div>
             </div>
           </div>
         </div>
@@ -44,22 +106,19 @@
               <input
                 class="form-check-input"
                 type="radio"
-                name="payment"
-                id="cod"
-                value="cod"
-                [(ngModel)]="paymentMethod"
-                checked
+                formControlName="paymentMethod"
+                value="Cash"
+                id="cash"
               />
-              <label class="form-check-label" for="cod">Cash on Delivery</label>
+              <label class="form-check-label" for="cash">Cash on Delivery</label>
             </div>
             <div class="form-check">
               <input
                 class="form-check-input"
                 type="radio"
-                name="payment"
+                formControlName="paymentMethod"
+                value="Card"
                 id="card"
-                value="card"
-                [(ngModel)]="paymentMethod"
               />
               <label class="form-check-label" for="card">Credit/Debit Card</label>
             </div>
@@ -69,24 +128,27 @@
         <div class="card mb-3 border-0 shadow-sm rounded-4">
           <div class="card-body">
             <h6 class="fw-semibold mb-3">Order Summary</h6>
-            <div *ngFor="let item of cartItems" class="d-flex align-items-center mb-2">
+            <div *ngIf="selectedItems.length === 0" class="text-center py-3">
+              <p class="text-muted mb-0">No items selected</p>
+            </div>
+            <div *ngFor="let item of selectedItems" class="d-flex align-items-center mb-2">
               <img
-                [src]="item.book.image"
-                [alt]="item.book.name"
+                [src]="item.book?.image"
+                [alt]="item.book?.name"
                 class="rounded me-2"
                 style="width: 40px; height: 40px; object-fit: cover"
               />
               <div class="flex-grow-1">
-                <div class="small fw-semibold">{{ item.book.name }}</div>
+                <div class="small fw-semibold">{{ item.book?.name }}</div>
                 <div class="text-muted small">
-                  <ng-container *ngFor="let author of item.book.authors; let last = last">
+                  <ng-container *ngFor="let author of item.book?.authors; let last = last">
                     {{ author.name }}<span *ngIf="!last">, </span>
                   </ng-container>
                 </div>
                 <div class="text-muted small">x{{ item.quantity }}</div>
               </div>
               <div class="fw-bold text-primary">
-                {{ item.book.price * item.quantity | currency: 'VND' }}
+                {{ item.book?.price * item.quantity | currency: 'VND' }}
               </div>
             </div>
             <hr />
@@ -105,8 +167,21 @@
           </div>
         </div>
         <div class="d-grid">
-          <button class="btn btn-primary btn-lg rounded-pill" type="submit">
-            <i class="fas fa-check-circle me-1"></i> Confirm Order
+          <button
+            class="btn btn-primary btn-lg rounded-pill"
+            type="submit"
+            [disabled]="checkoutForm.invalid || isSubmitting"
+            (click)="confirmOrder()"
+          >
+            <span *ngIf="!isSubmitting">Confirm Order</span>
+            <span *ngIf="isSubmitting">
+              <span
+                class="spinner-border spinner-border-sm me-2"
+                role="status"
+                aria-hidden="true"
+              ></span>
+              Processing...
+            </span>
           </button>
         </div>
       </form>

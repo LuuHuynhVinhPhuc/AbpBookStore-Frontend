@@ -1,0 +1,87 @@
+<div class="card mt-3">
+  <div class="card-header bg-white py-3">
+    <h5 class="mb-0">Order Management</h5>
+  </div>
+  <div class="card-body">
+    <ngx-datatable
+      class="bootstrap"
+      [columns]="columns"
+      [rows]="orderService.data.items"
+      [count]="orderService.data.totalCount"
+      [externalPaging]="true"
+      [limit]="orderService.list.maxResultCount"
+      [footerHeight]="50"
+      [headerHeight]="50"
+      [rowHeight]="60"
+      [scrollbarV]="true"
+      [scrollbarH]="true"
+      [selectionType]="SelectionType.single"
+      (page)="onPageChange($event)"
+      [trackByProp]="'id'"
+      [sortType]="SortType.single"
+      [externalSorting]="false"
+      [columnMode]="'force'"
+      style="height: 400px; width: 100%"
+    >
+      <!-- Customer Name column -->
+      <ngx-datatable-column name="Customer" prop="fullName" [sortable]="true">
+        <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+          <strong>{{ value }}</strong>
+        </ng-template>
+      </ngx-datatable-column>
+
+      <!-- Order Date column -->
+      <ngx-datatable-column name="Order Date" prop="orderDate" [sortable]="true" width="150">
+        <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+          {{ value | date: 'dd/MM/yyyy' }}
+        </ng-template>
+      </ngx-datatable-column>
+
+      <!-- Total Amount column -->
+      <ngx-datatable-column name="Total Amount" prop="totalPrice" [sortable]="true" width="150">
+        <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+          <span class="text-success fw-bold">{{ value | currency: 'VND' }}</span>
+        </ng-template>
+      </ngx-datatable-column>
+
+      <!-- Payment Method column -->
+      <ngx-datatable-column
+        name="Payment Method"
+        prop="paymentMethod"
+        [sortable]="true"
+        width="150"
+      >
+        <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+          <span class="badge bg-info">{{ value }}</span>
+        </ng-template>
+      </ngx-datatable-column>
+
+      <!-- Status column -->
+      <ngx-datatable-column name="Status" prop="orderStatus" [sortable]="true" width="150">
+        <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+          <span class="badge" [ngClass]="getStatusBadgeClass(value)">
+            {{ getStatusText(value) }}
+          </span>
+        </ng-template>
+      </ngx-datatable-column>
+
+      <!-- Custom action column template -->
+      <ngx-datatable-column name="Actions" [sortable]="false" [canAutoResize]="false" width="120">
+        <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+          <div class="d-flex gap-2">
+            <button
+              class="btn btn-sm btn-success"
+              (click)="updateOrderStatus(row)"
+              title="Update Status"
+            >
+              <i class="bi bi-check-circle"></i>
+            </button>
+            <button class="btn btn-sm btn-danger" (click)="deleteOrder(row)" title="Delete Order">
+              <i class="bi bi-trash"></i>
+            </button>
+          </div>
+        </ng-template>
+      </ngx-datatable-column>
+    </ngx-datatable>
+  </div>
+</div>
