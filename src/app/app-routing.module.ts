@@ -25,7 +25,7 @@ const routes: Routes = [
           ),
       },
       {
-        path: 'card',
+        path: 'cart',
         loadComponent: () => import('./page/card/card.component').then((m) => m.CardComponent),
       },
       {

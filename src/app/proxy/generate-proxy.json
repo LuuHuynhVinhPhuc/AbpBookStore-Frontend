@@ -2484,7 +2484,7 @@
                 "type": "Volo.Abp.Application.Dtos.PagedResultDto<Marcus.BookStore.Orders.DTOs.OrderDTO>",
                 "typeSimple": "Volo.Abp.Application.Dtos.PagedResultDto<Marcus.BookStore.Orders.DTOs.OrderDTO>"
               },
-              "allowAnonymous": false,
+              "allowAnonymous": true,
               "implementFrom": "Marcus.BookStore.Orders.IOrderAppService"
             },
             "DeleteAsyncById": {

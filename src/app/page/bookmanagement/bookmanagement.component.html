@@ -7,23 +7,20 @@
       </button>
     </div>
   </div>
-  <div class="card-body">
+  <div class="container">
     <ngx-datatable
-      class="bootstrap"
+      class="material"
       [rows]="bookService.data.items"
       [count]="bookService.data.totalCount"
+      [columnMode]="'force'"
       [externalPaging]="true"
-      [limit]="bookService.list.maxResultCount"
+      [limit]="bookService.filter.maxResultCount"
       [footerHeight]="50"
       [headerHeight]="50"
       [rowHeight]="60"
-      [scrollbarV]="true"
-      [scrollbarH]="true"
       (page)="onPageChange($event)"
       [trackByProp]="'id'"
       [externalSorting]="false"
-      [columnMode]="'force'"
-      style="height: 400px; width: 100%"
     >
       <!-- Book Name column -->
       <ngx-datatable-column name="Book Name" prop="name" [sortable]="true">
@@ -50,13 +47,6 @@
       <ngx-datatable-column name="Publish Date" prop="publishDate" [sortable]="true" width="150">
         <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
           {{ value | date: 'dd/MM/yyyy' }}
-        </ng-template>
-      </ngx-datatable-column>
-
-      <!-- Authors column -->
-      <ngx-datatable-column name="Authors" prop="authors" [sortable]="true">
-        <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
-          {{ getAuthorNames(value) }}
         </ng-template>
       </ngx-datatable-column>
 

@@ -22,9 +22,10 @@ export class BookManagementService {
     totalCount: 0,
   };
   filter = {
+    skipCount: 0,
     maxResultCount: 5,
     sorting: 'CreationTime desc',
-    skipCount: 1,
+    filter: '',
   } as BookPagedAndSortedResultRequestDto;
 
   constructor() {}
@@ -32,10 +33,8 @@ export class BookManagementService {
   hookToQuery() {
     const getData = (query: ABP.PageQueryParams) => {
       return this.bookService.getList({
-        skipCount: this.filter.skipCount ?? 1,
-        maxResultCount: query.maxResultCount ?? 5,
-        sorting: this.filter.sorting ?? 'CreationTime desc',
-        filter: this.filter.filter,
+        ...query,
+        ...this.filter,
       });
     };
 
@@ -49,10 +48,8 @@ export class BookManagementService {
   AuthorHookToQuery() {
     const getData = (query: ABP.PageQueryParams) => {
       return this.authorService.getList({
-        skipCount: query.skipCount ?? 1,
-        maxResultCount: query.maxResultCount ?? 5,
-        sorting: this.filter.sorting ?? 'CreationTime desc',
-        filter: this.filter.filter,
+        ...query,
+        ...this.filter,
       });
     };
 

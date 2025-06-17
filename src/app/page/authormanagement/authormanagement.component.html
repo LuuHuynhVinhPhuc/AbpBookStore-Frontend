@@ -9,21 +9,18 @@
   </div>
   <div class="card-body">
     <ngx-datatable
-      class="bootstrap"
+      class="material"
       [rows]="authorService.data.items"
       [count]="authorService.data.totalCount"
+      [columnMode]="'force'"
       [externalPaging]="true"
       [limit]="authorService.list.maxResultCount"
       [footerHeight]="50"
       [headerHeight]="50"
       [rowHeight]="60"
-      [scrollbarV]="true"
-      [scrollbarH]="true"
       (page)="onChangePage($event)"
       [trackByProp]="'id'"
       [externalSorting]="false"
-      [columnMode]="'force'"
-      style="height: 400px; width: 100%"
     >
       <!-- Name column -->
       <ngx-datatable-column name="Name" prop="name" [sortable]="true">
