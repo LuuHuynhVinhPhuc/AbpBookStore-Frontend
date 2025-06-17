@@ -2,6 +2,7 @@ import type { EntityDto } from '@abp/ng.core';
 
 export interface CreateAndUpdateOrderItemDTO {
   bookId?: string;
+  bookName?: string;
   quantity: number;
   unitPrice: number;
 }
@@ -9,7 +10,6 @@ export interface CreateAndUpdateOrderItemDTO {
 export interface OrderItemDTO extends EntityDto<string> {
   bookId?: string;
   bookName?: string;
-  authorName?: string;
   quantity: number;
   unitPrice: number;
 }

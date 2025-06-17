@@ -1,8 +1,8 @@
-import { ListService, PagedResultDto } from '@abp/ng.core';
+import { ABP, ListService, PagedResultDto } from '@abp/ng.core';
 import { Confirmation, ConfirmationService } from '@abp/ng.theme.shared';
 import { inject, Injectable } from '@angular/core';
 import { OrderService } from '@proxy/marcus/book-store/orders';
-import { OrderDTO, OrderPageAndSortSesultRequestDTO } from '@proxy/marcus/book-store/orders/dtos';
+import { OrderDTO, OrderPageAndSortResultRequestDTO } from '@proxy/marcus/book-store/orders/dtos';
 import { filter, switchMap } from 'rxjs';
 
 @Injectable()
@@ -20,19 +20,16 @@ export class OrderManagementService {
     pageNumber: 1,
     maxResultCount: 5,
     sorting: 'CreationTime desc',
-  } as OrderPageAndSortSesultRequestDTO;
+  } as OrderPageAndSortResultRequestDTO;
 
   hookToQuery() {
-    const getData = () => {
-      const page = this.list.page ?? 1;
-      const pageNumber = page < 1 ? 1 : page;
-      const result = this.OrderService.getList({
-        pageNumber: pageNumber,
-        maxResultCount: this.filter.maxResultCount ?? 5,
+    const getData = (query: ABP.PageQueryParams) => {
+      return this.OrderService.getList({
+        skipCount: query.skipCount ?? 0,
+        maxResultCount: query.maxResultCount ?? 5,
         sorting: this.filter.sorting ?? 'CreationTime desc',
         filter: this.filter.filter,
       });
-      return result;
     };
 
     const setData = (list: PagedResultDto<OrderDTO>) => {

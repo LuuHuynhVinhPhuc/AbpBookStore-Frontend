@@ -16,8 +16,8 @@ function configureRoutes(routesService: RoutesService) {
         layout: eLayoutType.application,
       },
       {
-        path: 'card',
-        name: 'Card',
+        path: 'cart',
+        name: 'Cart',
         iconClass: 'fas fa-shopping-cart',
         order: 1,
         layout: eLayoutType.application,

@@ -1,4 +1,4 @@
-import type { OrderCreateAndUpdateDTO, OrderDTO, OrderPageAndSortSesultRequestDTO } from './dtos/models';
+import type { OrderCreateAndUpdateDTO, OrderDTO, OrderPageAndSortResultRequestDTO } from './dtos/models';
 import { RestService, Rest } from '@abp/ng.core';
 import type { PagedResultDto } from '@abp/ng.core';
 import { Injectable } from '@angular/core';
@@ -36,19 +36,11 @@ export class OrderService {
     { apiName: this.apiName,...config });
   
 
-  get = (id: string, config?: Partial<Rest.Config>) =>
-    this.restService.request<any, OrderDTO>({
-      method: 'GET',
-      url: `/api/app/order/${id}`,
-    },
-    { apiName: this.apiName,...config });
-  
-
-  getList = (input: OrderPageAndSortSesultRequestDTO, config?: Partial<Rest.Config>) =>
+  getList = (input: OrderPageAndSortResultRequestDTO, config?: Partial<Rest.Config>) =>
     this.restService.request<any, PagedResultDto<OrderDTO>>({
       method: 'GET',
       url: '/api/app/order',
-      params: { filter: input.filter, pageNumber: input.pageNumber, maxResultCount: input.maxResultCount, sorting: input.sorting },
+      params: { filter: input.filter, sorting: input.sorting, skipCount: input.skipCount, maxResultCount: input.maxResultCount },
     },
     { apiName: this.apiName,...config });
   

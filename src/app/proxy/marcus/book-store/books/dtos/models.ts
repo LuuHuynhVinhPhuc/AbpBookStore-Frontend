@@ -1,4 +1,4 @@
-import type { EntityDto } from '@abp/ng.core';
+import type { EntityDto, PagedAndSortedResultRequestDto } from '@abp/ng.core';
 import type { BookType } from '../book-type.enum';
 import type { AuthorDTO } from '../../authors/dtos/models';
 
@@ -11,11 +11,8 @@ export interface BookDTO extends EntityDto {
   authors: AuthorDTO[];
 }
 
-export interface BookPagedAndSortedResultRequestDto {
+export interface BookPagedAndSortedResultRequestDto extends PagedAndSortedResultRequestDto {
   filter?: string;
-  pageNumber: number;
-  maxResultCount: number;
-  sorting?: string;
 }
 
 export interface CreateBookDTO {

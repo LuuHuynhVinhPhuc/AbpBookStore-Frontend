@@ -1,4 +1,4 @@
-import { ListService, PagedResultDto } from '@abp/ng.core';
+import { ABP, ListService, PagedResultDto } from '@abp/ng.core';
 import { Confirmation, ConfirmationService } from '@abp/ng.theme.shared';
 import { inject, Injectable } from '@angular/core';
 import { AuthorService } from '@proxy/marcus/book-store/authors';
@@ -22,21 +22,18 @@ export class BookManagementService {
     totalCount: 0,
   };
   filter = {
-    pageNumber: 1,
     maxResultCount: 5,
     sorting: 'CreationTime desc',
+    skipCount: 1,
   } as BookPagedAndSortedResultRequestDto;
 
   constructor() {}
 
   hookToQuery() {
-    const getData = () => {
-      const page = this.list.page ?? 1;
-      const pageNumber = page < 1 ? 1 : page;
-
+    const getData = (query: ABP.PageQueryParams) => {
       return this.bookService.getList({
-        pageNumber: pageNumber,
-        maxResultCount: this.filter.maxResultCount ?? 5,
+        skipCount: this.filter.skipCount ?? 1,
+        maxResultCount: query.maxResultCount ?? 5,
         sorting: this.filter.sorting ?? 'CreationTime desc',
         filter: this.filter.filter,
       });
@@ -50,13 +47,10 @@ export class BookManagementService {
   }
 
   AuthorHookToQuery() {
-    const getData = () => {
-      const page = this.list.page ?? 1;
-      const pageNumber = page < 1 ? 1 : page;
-
+    const getData = (query: ABP.PageQueryParams) => {
       return this.authorService.getList({
-        pageNumber: pageNumber,
-        maxResultCount: this.filter.maxResultCount ?? 5,
+        skipCount: query.skipCount ?? 1,
+        maxResultCount: query.maxResultCount ?? 5,
         sorting: this.filter.sorting ?? 'CreationTime desc',
         filter: this.filter.filter,
       });

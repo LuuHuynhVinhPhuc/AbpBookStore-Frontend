@@ -13,15 +13,20 @@ export class DashboardViewService {
   };
   filter = { sorting: 'CreationTime desc' } as BookPagedAndSortedResultRequestDto;
 
-  hooktoQuery() {
-    const getData = (query: ABP.PageQueryParams) =>
-      this.dashboardService.getList({
-        ...query,
-        ...this.filter,
+  hookToQuery() {
+    const getData = (query: ABP.PageQueryParams) => {
+      return this.dashboardService.getList({
+        skipCount: query.skipCount ?? 0,
+        maxResultCount: query.maxResultCount ?? 5,
+        sorting: this.filter.sorting ?? 'CreationTime desc',
+        filter: this.filter.filter,
       });
+    };
+
     const setData = (list: PagedResultDto<BookDTO>) => {
       this.data = list;
     };
+
     this.list.hookToQuery(getData).subscribe(setData);
   }
 }

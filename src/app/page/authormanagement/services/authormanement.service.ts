@@ -1,4 +1,4 @@
-import { ListService, PagedResultDto } from '@abp/ng.core';
+import { ABP, ListService, PagedResultDto } from '@abp/ng.core';
 import { Confirmation, ConfirmationService } from '@abp/ng.theme.shared';
 import { inject, Injectable } from '@angular/core';
 import { AuthorService } from '@proxy/marcus/book-store/authors';
@@ -27,13 +27,10 @@ export class AuthorManagementService {
   } as AuthorPagedAndSortedResultRequestDto;
 
   hookToQuery() {
-    const getData = () => {
-      const page = this.list.page ?? 1;
-      const pageNumber = page < 1 ? 1 : page;
-
+    const getData = (query: ABP.PageQueryParams) => {
       return this.authorService.getList({
-        pageNumber: pageNumber,
-        maxResultCount: this.filter.maxResultCount ?? 5,
+        skipCount: query.skipCount ?? 0,
+        maxResultCount: query.maxResultCount ?? 5,
         sorting: this.filter.sorting ?? 'CreationTime desc',
         filter: this.filter.filter,
       });

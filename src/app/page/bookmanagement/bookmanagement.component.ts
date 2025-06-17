@@ -201,6 +201,7 @@ export class BookmanagementComponent implements OnInit {
 
   onPageChange(event: any) {
     this.bookService.list.page = event.offset + 1; // Convert to 1-based page number
+    this.bookService.filter.skipCount = event.offset * this.bookService.filter.maxResultCount;
     this.bookService.hookToQuery();
   }
 }

@@ -32,7 +32,7 @@ export class DashboardComponent implements OnInit {
   searchTerm = 'Tach';
 
   ngOnInit(): void {
-    this.dashboardService.hooktoQuery();
+    this.dashboardService.hookToQuery();
   }
 
   searchBooks() {

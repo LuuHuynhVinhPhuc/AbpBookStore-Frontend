@@ -39,7 +39,7 @@ export class AuthorService {
     this.restService.request<any, PagedResultDto<AuthorDTO>>({
       method: 'GET',
       url: '/api/app/author',
-      params: { filter: input.filter, pageNumber: input.pageNumber, maxResultCount: input.maxResultCount, sorting: input.sorting },
+      params: { filter: input.filter, sorting: input.sorting, skipCount: input.skipCount, maxResultCount: input.maxResultCount },
     },
     { apiName: this.apiName,...config });
   

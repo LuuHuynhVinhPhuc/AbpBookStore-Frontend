@@ -1,6 +1,6 @@
 import type { OrderStatus } from '../order-status.enum';
 import type { OrderItemDTO } from '../../order-items/dtos/models';
-import type { AuditedEntityDto } from '@abp/ng.core';
+import type { AuditedEntityDto, PagedAndSortedResultRequestDto } from '@abp/ng.core';
 
 export interface OrderCreateAndUpdateDTO {
   userID?: string;
@@ -26,9 +26,6 @@ export interface OrderDTO extends AuditedEntityDto<string> {
   orderItems: OrderItemDTO[];
 }
 
-export interface OrderPageAndSortSesultRequestDTO {
+export interface OrderPageAndSortResultRequestDTO extends PagedAndSortedResultRequestDto {
   filter?: string;
-  pageNumber: number;
-  maxResultCount: number;
-  sorting?: string;
 }

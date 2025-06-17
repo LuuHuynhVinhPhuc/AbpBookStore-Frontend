@@ -39,7 +39,7 @@ export class BookService {
     this.restService.request<any, PagedResultDto<BookDTO>>({
       method: 'GET',
       url: '/api/app/book',
-      params: { filter: input.filter, pageNumber: input.pageNumber, maxResultCount: input.maxResultCount, sorting: input.sorting },
+      params: { filter: input.filter, sorting: input.sorting, skipCount: input.skipCount, maxResultCount: input.maxResultCount },
     },
     { apiName: this.apiName,...config });
   
