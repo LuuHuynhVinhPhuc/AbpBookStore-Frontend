@@ -1,23 +1,34 @@
-import type { EntityDto, PagedAndSortedResultRequestDto } from '@abp/ng.core';
 import type { OrderStatus } from '../order-status.enum';
 import type { OrderItemDTO } from '../../order-items/dtos/models';
+import type { AuditedEntityDto } from '@abp/ng.core';
 
-export interface OrderCreateandUpdateDTO extends EntityDto<string> {
-  userId?: string;
-  orderDate?: string;
-  totalPrice: number;
+export interface OrderCreateAndUpdateDTO {
+  userID?: string;
+  fullName?: string;
+  address?: string;
+  phone?: string;
+  email?: string;
+  paymentMethod?: string;
   orderStatus?: OrderStatus;
   orderItems: OrderItemDTO[];
 }
 
-export interface OrderDTO extends EntityDto<string> {
-  userId?: string;
+export interface OrderDTO extends AuditedEntityDto<string> {
+  customerID?: string;
+  fullName?: string;
+  address?: string;
+  phone?: string;
+  email?: string;
+  paymentMethod?: string;
   orderDate?: string;
-  totalPrice: number;
   orderStatus?: OrderStatus;
+  totalPrice: number;
   orderItems: OrderItemDTO[];
 }
 
-export interface OrderItemPageAndSortSesultRequestDTO extends PagedAndSortedResultRequestDto {
+export interface OrderPageAndSortSesultRequestDTO {
   filter?: string;
+  pageNumber: number;
+  maxResultCount: number;
+  sorting?: string;
 }

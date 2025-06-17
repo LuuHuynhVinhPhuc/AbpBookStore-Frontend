@@ -1,6 +1,8 @@
 import { ListService, PagedResultDto } from '@abp/ng.core';
 import { Confirmation, ConfirmationService } from '@abp/ng.theme.shared';
 import { inject, Injectable } from '@angular/core';
+import { AuthorService } from '@proxy/marcus/book-store/authors';
+import { AuthorDTO } from '@proxy/marcus/book-store/authors/dtos';
 import { BookService } from '@proxy/marcus/book-store/books';
 import { BookDTO, BookPagedAndSortedResultRequestDto } from '@proxy/marcus/book-store/books/dtos';
 import { filter, switchMap } from 'rxjs';
@@ -8,8 +10,13 @@ import { filter, switchMap } from 'rxjs';
 @Injectable()
 export class BookManagementService {
   private readonly bookService = inject(BookService);
+  private readonly authorService = inject(AuthorService);
   protected readonly confirmationService = inject(ConfirmationService);
   public list = inject(ListService);
+  authordata: PagedResultDto<AuthorDTO> = {
+    items: [],
+    totalCount: 0,
+  };
   data: PagedResultDto<BookDTO> = {
     items: [],
     totalCount: 0,
@@ -37,6 +44,26 @@ export class BookManagementService {
 
     const setData = (list: PagedResultDto<BookDTO>) => {
       this.data = list;
+    };
+
+    this.list.hookToQuery(getData).subscribe(setData);
+  }
+
+  AuthorHookToQuery() {
+    const getData = () => {
+      const page = this.list.page ?? 1;
+      const pageNumber = page < 1 ? 1 : page;
+
+      return this.authorService.getList({
+        pageNumber: pageNumber,
+        maxResultCount: this.filter.maxResultCount ?? 5,
+        sorting: this.filter.sorting ?? 'CreationTime desc',
+        filter: this.filter.filter,
+      });
+    };
+
+    const setData = (list: PagedResultDto<AuthorDTO>) => {
+      this.authordata = list;
     };
 
     this.list.hookToQuery(getData).subscribe(setData);

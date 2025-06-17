@@ -36,6 +36,5 @@ import { HeaderComponent } from './header/header.component';
     RouterModule,
     CurrencyFormatDirective,
   ],
-  providers: [],
 })
 export class SharedModule {}

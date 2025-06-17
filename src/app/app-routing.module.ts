@@ -47,6 +47,14 @@ const routes: Routes = [
             (m) => m.AuthormanagementComponent
           ),
       },
+      {
+        path: 'order-management',
+        loadComponent: () => {
+          return import('./page/ordermanagement/ordermanagement.component').then(
+            (m) => m.OrdermanagementComponent
+          );
+        },
+      },
     ],
   },
   {

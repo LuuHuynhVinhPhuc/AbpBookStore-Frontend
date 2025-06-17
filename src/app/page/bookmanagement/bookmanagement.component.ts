@@ -1,6 +1,7 @@
 import { PageComponent } from '@abp/ng.components/page';
 import { ListService } from '@abp/ng.core';
 import { ToasterService } from '@abp/ng.theme.shared';
+import { CommonModule } from '@angular/common';
 import { Component, inject, OnInit, ViewChild } from '@angular/core';
 import {
   AbstractControl,
@@ -18,22 +19,13 @@ import { AuthorDTO } from '@proxy/marcus/book-store/authors/dtos';
 import { BookService } from '@proxy/marcus/book-store/books';
 import { BookType } from '@proxy/marcus/book-store/books/book-type.enum';
 import { BookDTO, UpdateBookDTO } from '@proxy/marcus/book-store/books/dtos';
-import { ColumnComponent } from 'src/app/shared/data-table/column/column.component';
-import { DataTableComponent } from 'src/app/shared/data-table/data-table.component';
-import { HeaderTableComponent } from 'src/app/shared/data-table/header/header.component';
+import { NgxDatatableModule, SelectionType, SortType } from '@swimlane/ngx-datatable';
 import { BookManagementService } from './services/bookmanagement.service';
 
 @Component({
   selector: 'app-bookmanagement',
   standalone: true,
-  imports: [
-    DataTableComponent,
-    HeaderTableComponent,
-    ColumnComponent,
-    FormsModule,
-    ReactiveFormsModule,
-    NgSelectModule,
-  ],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, NgSelectModule, NgxDatatableModule],
   providers: [BookManagementService, ListService, PageComponent],
   templateUrl: './bookmanagement.component.html',
   styleUrl: './bookmanagement.component.scss',
@@ -59,9 +51,12 @@ export class BookmanagementComponent implements OnInit {
 
   @ViewChild('addBookModal') addBookModal: any;
 
+  SelectionType = SelectionType;
+  SortType = SortType;
+
   ngOnInit(): void {
     this.bookService.hookToQuery();
-    console.log(this.bookService.data);
+    this.bookService.AuthorHookToQuery();
 
     this.initBookForm();
   }
@@ -202,5 +197,10 @@ export class BookmanagementComponent implements OnInit {
 
   getAuthorNames(authors: AuthorDTO[]): string {
     return authors && authors.length > 0 ? authors.map((a) => a.name).join(', ') : 'Unknown';
+  }
+
+  onPageChange(event: any) {
+    this.bookService.list.page = event.offset + 1; // Convert to 1-based page number
+    this.bookService.hookToQuery();
   }
 }

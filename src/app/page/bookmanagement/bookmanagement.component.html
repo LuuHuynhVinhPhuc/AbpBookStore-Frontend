@@ -1,35 +1,84 @@
-<div class="col-12 col-sm-12 col-md-12 m-0 mt-3">
-  <div class="d-flex justify-content-end mb-3">
-    <button class="btn btn-primary" (click)="openAddBookModal()">
-      <i class="fas fa-plus me-1"></i> Add New Book
-    </button>
+<div class="card mt-3">
+  <div class="card-header bg-white py-3">
+    <div class="d-flex justify-content-between align-items-center">
+      <h5 class="mb-0">Book Management</h5>
+      <button class="btn btn-primary" (click)="openAddBookModal()">
+        <i class="fas fa-plus me-1"></i> Add New Book
+      </button>
+    </div>
   </div>
+  <div class="card-body">
+    <ngx-datatable
+      class="bootstrap"
+      [rows]="bookService.data.items"
+      [count]="bookService.data.totalCount"
+      [externalPaging]="true"
+      [limit]="bookService.list.maxResultCount"
+      [footerHeight]="50"
+      [headerHeight]="50"
+      [rowHeight]="60"
+      [scrollbarV]="true"
+      [scrollbarH]="true"
+      (page)="onPageChange($event)"
+      [trackByProp]="'id'"
+      [externalSorting]="false"
+      [columnMode]="'force'"
+      style="height: 400px; width: 100%"
+    >
+      <!-- Book Name column -->
+      <ngx-datatable-column name="Book Name" prop="name" [sortable]="true">
+        <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+          <strong>{{ value }}</strong>
+        </ng-template>
+      </ngx-datatable-column>
 
-  <app-data-table
-    [itemRemove]="true"
-    [itemEdit]="true"
-    [isActivePaging]="true"
-    [totalCount]="bookService.data.totalCount"
-    [records]="bookService.data.items"
-    (removeItemHandler)="bookService.delete($event.entry)"
-    (editItemHandler)="editBook($event.entry)"
-    [pageSize]="bookService.list.maxResultCount"
-    (changedPaging)="bookService.changePage($event)"
-  >
-    <app-header name="action"></app-header>
-    <app-header title="Book Name" name="name"></app-header>
-    <app-header title="Type" name="type"></app-header>
-    <app-header title="Price" name="price"></app-header>
-    <app-header title="Publish Date" name="publishDate"></app-header>
-    <app-header title="Authors" name="authors"></app-header>
+      <!-- Type column -->
+      <ngx-datatable-column name="Type" prop="type" [sortable]="true" width="150">
+        <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+          <span class="badge bg-info">{{ getBookTypeText(value) }}</span>
+        </ng-template>
+      </ngx-datatable-column>
 
-    <app-column type="action"></app-column>
-    <app-column value="name"></app-column>
-    <app-column value="type" [formatter]="getBookTypeText"></app-column>
-    <app-column value="price"></app-column>
-    <app-column value="publishDate" columnType="date"></app-column>
-    <app-column value="authors" [formatter]="getAuthorNames"></app-column>
-  </app-data-table>
+      <!-- Price column -->
+      <ngx-datatable-column name="Price" prop="price" [sortable]="true" width="150">
+        <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+          <span class="text-success fw-bold">{{ value | currency: 'VND' }}</span>
+        </ng-template>
+      </ngx-datatable-column>
+
+      <!-- Publish Date column -->
+      <ngx-datatable-column name="Publish Date" prop="publishDate" [sortable]="true" width="150">
+        <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+          {{ value | date: 'dd/MM/yyyy' }}
+        </ng-template>
+      </ngx-datatable-column>
+
+      <!-- Authors column -->
+      <ngx-datatable-column name="Authors" prop="authors" [sortable]="true">
+        <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+          {{ getAuthorNames(value) }}
+        </ng-template>
+      </ngx-datatable-column>
+
+      <!-- Actions column -->
+      <ngx-datatable-column name="Actions" [sortable]="false" [canAutoResize]="false" width="120">
+        <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+          <div class="d-flex gap-2">
+            <button class="btn btn-sm btn-primary" (click)="editBook(row)" title="Edit Book">
+              <i class="bi bi-pencil"></i>
+            </button>
+            <button
+              class="btn btn-sm btn-danger"
+              (click)="bookService.delete(row)"
+              title="Delete Book"
+            >
+              <i class="bi bi-trash"></i>
+            </button>
+          </div>
+        </ng-template>
+      </ngx-datatable-column>
+    </ngx-datatable>
+  </div>
 </div>
 
 <!-- Add Book Modal -->
@@ -89,7 +138,7 @@
           id="authorIds"
           name="authorIds"
           formControlName="authorIds"
-          [items]="authors"
+          [items]="bookService.authordata.items"
           bindLabel="name"
           bindValue="id"
           [multiple]="true"
