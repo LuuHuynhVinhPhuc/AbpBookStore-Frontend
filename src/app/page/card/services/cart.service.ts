@@ -1,3 +1,4 @@
+import { ConfigStateService } from '@abp/ng.core';
 import { Injectable } from '@angular/core';
 import { BookDTO } from '@proxy/marcus/book-store/books/dtos';
 import { OrderCreateAndUpdateDTO } from '@proxy/marcus/book-store/orders/dtos';
@@ -36,28 +37,17 @@ export interface CreateOrderDTO {
   providedIn: 'root',
 })
 export class CartService {
-  private cartItems = new BehaviorSubject<CartItem[]>([]);
-  cartItems$ = this.cartItems.asObservable();
+  private cartItemsSubject = new BehaviorSubject<CartItem[]>([]);
+  cartItems$ = this.cartItemsSubject.asObservable();
 
-  constructor(private orderService: OrderService) {
-    // Load cart from localStorage on service initialization
+  constructor(
+    private orderService: OrderService,
+    private configState: ConfigStateService
+  ) {
+    // Load cart items from localStorage on service initialization
     const savedCart = localStorage.getItem('cart');
     if (savedCart) {
-      try {
-        const parsedCart = JSON.parse(savedCart);
-        // Ensure parsedCart is an array
-        if (Array.isArray(parsedCart)) {
-          this.cartItems.next(parsedCart);
-        } else {
-          console.error('Invalid cart data structure, initializing empty cart');
-          this.cartItems.next([]);
-        }
-      } catch (error) {
-        console.error('Error parsing cart from localStorage:', error);
-        this.cartItems.next([]);
-      }
-    } else {
-      this.cartItems.next([]);
+      this.cartItemsSubject.next(JSON.parse(savedCart));
     }
   }
 
@@ -67,14 +57,14 @@ export class CartService {
       return;
     }
 
-    const currentItems = [...this.cartItems.value];
+    const currentItems = [...this.cartItemsSubject.value];
     const existingItem = currentItems.find((item) => item.book.id === book.id);
 
     if (existingItem) {
       existingItem.quantity += 1;
-      this.cartItems.next(currentItems);
+      this.cartItemsSubject.next(currentItems);
     } else {
-      this.cartItems.next([...currentItems, { book, quantity: 1, selected: false }]);
+      this.cartItemsSubject.next([...currentItems, { book, quantity: 1, selected: false }]);
     }
 
     this.saveCart();
@@ -86,9 +76,9 @@ export class CartService {
       return;
     }
 
-    const currentItems = [...this.cartItems.value];
+    const currentItems = [...this.cartItemsSubject.value];
     const updatedItems = currentItems.filter((item) => item.book.id !== bookId);
-    this.cartItems.next(updatedItems);
+    this.cartItemsSubject.next(updatedItems);
     this.saveCart();
   }
 
@@ -98,27 +88,27 @@ export class CartService {
       return;
     }
 
-    const currentItems = [...this.cartItems.value];
+    const currentItems = [...this.cartItemsSubject.value];
     const item = currentItems.find((item) => item.book.id === bookId);
     if (item) {
       item.quantity = quantity;
-      this.cartItems.next(currentItems);
+      this.cartItemsSubject.next(currentItems);
       this.saveCart();
     }
   }
 
   clearCart() {
-    this.cartItems.next([]);
+    this.cartItemsSubject.next([]);
     this.saveCart();
   }
 
   getTotalItems(): number {
-    const items = this.cartItems.value;
+    const items = this.cartItemsSubject.value;
     return items.reduce((total, item) => total + item.quantity, 0);
   }
 
   getTotalPrice(): number {
-    const items = this.cartItems.value;
+    const items = this.cartItemsSubject.value;
     return items.reduce((total, item) => total + item.book.price * item.quantity, 0);
   }
 
@@ -128,35 +118,35 @@ export class CartService {
       return;
     }
 
-    const currentItems = [...this.cartItems.value];
+    const currentItems = [...this.cartItemsSubject.value];
     const item = currentItems.find((item) => item.book.id === bookId);
     if (item) {
       item.selected = !item.selected;
-      this.cartItems.next(currentItems);
+      this.cartItemsSubject.next(currentItems);
       this.saveCart();
     }
   }
 
   getSelectedItems(): CartItem[] {
-    return this.cartItems.value.filter((item) => item.selected);
+    return this.cartItemsSubject.value.filter((item) => item.selected);
   }
 
   getSelectedTotalPrice(): number {
-    return this.cartItems.value
+    return this.cartItemsSubject.value
       .filter((item) => item.selected)
       .reduce((total, item) => total + item.book.price * item.quantity, 0);
   }
 
   removeSelectedItems() {
-    const currentItems = [...this.cartItems.value];
+    const currentItems = [...this.cartItemsSubject.value];
     const updatedItems = currentItems.filter((item) => !item.selected);
-    this.cartItems.next(updatedItems);
+    this.cartItemsSubject.next(updatedItems);
     this.saveCart();
   }
 
   private saveCart() {
     try {
-      const cartData = this.cartItems.value;
+      const cartData = this.cartItemsSubject.value;
       localStorage.setItem('cart', JSON.stringify(cartData));
     } catch (error) {
       console.error('Error saving cart to localStorage:', error);
@@ -180,7 +170,7 @@ export class CartService {
 
     const orderData: OrderCreateAndUpdateDTO = {
       fullName: shippingInfo.fullName,
-      userID: '4795315E-3ECD-FF24-71CA-3A1A8927FF97',
+      userID: this.configState.getDeep('currentUser.id') as string,
       address: shippingInfo.address,
       phone: shippingInfo.phone,
       email: shippingInfo.email,
@@ -188,6 +178,19 @@ export class CartService {
       orderItems: orderItems,
     };
 
+    return this.orderService.create(orderData);
+  }
+
+  createOrder(shippingInfo: any, orderItems: any[]): Observable<any> {
+    const orderData: OrderCreateAndUpdateDTO = {
+      fullName: shippingInfo.fullName,
+      userID: this.configState.getDeep('currentUser.id') as string,
+      address: shippingInfo.address,
+      phone: shippingInfo.phone,
+      email: shippingInfo.email,
+      paymentMethod: shippingInfo.paymentMethod,
+      orderItems: orderItems,
+    };
     return this.orderService.create(orderData);
   }
 }
